@@ -1,0 +1,340 @@
+<nav
+  class="navbar navbar-main navbar-expand-lg navbar-light sticky-top"
+  id="navbar-main"
+>
+  <div class="container-fluid">
+    <ul class="navbar-nav navbar-nav-hover mr-2" *ngIf="!mobileView()">
+      <li class="nav-item" routerLinkActive="active">
+        <a
+          *ngIf="user"
+          class="nav-link"
+          (click)="redirectToProperty()"
+          [routerLink]="user.status===2?'mat-bang-cho-thue':'mat-bang'"
+          role="button"
+        >
+          <i class="pi pi-sign-out d-lg-none"> </i>
+          <span class="heading"> Mặt bằng cho thuê </span>
+        </a>
+        <a
+          *ngIf="!user"
+          class="nav-link"
+          (click)="redirectToProperty()"
+          [routerLink]="'mat-bang'"
+          role="button"
+        >
+          <i class="pi pi-sign-out d-lg-none"> </i>
+          <span class="heading"> Mặt bằng cho thuê </span>
+        </a>
+      </li>
+      <li class="nav-item" routerLinkActive="active" *ngIf="user">
+        <a
+          class="nav-link"
+          (click)="redirectToAdvancedSearch()"
+          [routerLink]="'tim-kiem-nang-cao'"
+          role="button"
+        >
+          <i class="pi pi-sign-out d-lg-none"> </i>
+          <span class="heading"> Tìm kiếm nâng cao </span>
+        </a>
+      </li>
+    </ul>
+    <div class="navbar-translate logo-mobile" *ngIf="mobileView()">
+      <a class="navbar-brand ml-lg-5" (click)="redirectToHome()">
+        <img src="assets/img/brand/crel-full-color-tb.png" referrerpolicy="no-referrer" id="brand-logo" />
+      </a>
+      <button
+        aria-controls="navbarSupportedContent"
+        aria-label="Toggle navigation"
+        class="navbar-toggler"
+        [attr.aria-expanded]="!isCollapsed"
+        (click)="isCollapsed = !isCollapsed"
+        id="example-header-2"
+        type="button"
+      >
+        <span class="navbar-toggler-icon"> </span>
+      </button>
+    </div>
+    <div
+      class="navbar-collapse"
+      [isAnimated]="true"
+      [collapse]="isCollapsed"
+      id="example-header-2"
+    >
+      <div class="navbar-collapse-header avatar-mobile">
+        <div class="row">
+          <div class="col-6 collapse-brand" *ngIf="user">
+            <a
+              class="nav-link"
+              data-toggle="dropdown"
+              href="javascript:;"
+              role="button"
+            >
+              <img
+                alt="Ảnh đại diện"
+                referrerpolicy="no-referrer"
+                class="img-fluid rounded-circle shadow mr-2"
+                src="{{ avatar }}"
+                style="width: 2.5rem"
+              />
+              <span class="heading">{{ name }}</span>
+            </a>
+          </div>
+          <div class="col-6 collapse-close text-right">
+            <button
+              aria-controls="navigation-index"
+              aria-label="Toggle navigation"
+              class="navbar-toggler"
+              [attr.aria-expanded]="!isCollapsed"
+              (click)="isCollapsed = !isCollapsed"
+              id="example-header-2"
+              type="button"
+            >
+              <span> </span> <span> </span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <ul
+        class="navbar-nav navbar-nav-hover align-items-lg-center ml-lg-auto"
+        style="padding: 0 3rem 0"
+        *ngIf="mobileView()"
+      >
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link" (click)="redirectToProperty()" role="button">
+            <span class="heading"> Mặt bằng cho thuê </span>
+          </a>
+        </li>
+        <li class="nav-item" routerLinkActive="active" *ngIf="user">
+          <a
+            class="nav-link"
+            (click)="redirectToAdvancedSearch()"
+            role="button"
+          >
+            <span class="heading"> Tìm kiếm nâng cao </span>
+          </a>
+        </li>
+        <li class="nav-item" routerLinkActive="active" *ngIf="null != user">
+          <a class="nav-link" (click)="redirectToAppointment()" role="button">
+            <span class="heading"> Quản lý cuộc hẹn </span>
+          </a>
+        </li>
+        <li class="nav-item" routerLinkActive="active" *ngIf="null != user">
+          <a class="nav-link" (click)="redirectToWishlist()" role="button">
+            <span class="heading">Danh sách yêu thích </span>
+          </a>
+        </li>
+        <li class="nav-item" routerLinkActive="active" *ngIf="null != user">
+          <a class="nav-link" (click)="redirectToSavedSearch()" role="button">
+            <span class="heading">Danh sách yêu cầu </span>
+          </a>
+        </li>
+        <li class="nav-item" routerLinkActive="active" *ngIf="null != user">
+          <a class="nav-link" (click)="redirectToContract()" role="button">
+            <span class="heading">Thông tin hợp đồng</span>
+          </a>
+        </li>
+        <p-divider></p-divider>
+        <li class="nav-item dropdown" dropdown *ngIf="null != user">
+          <a
+            class="nav-link"
+            data-toggle="dropdown"
+            dropdownToggle
+            href="javascript:;"
+            role="button"
+            (click)="viewProfile()"
+          >
+            <i class="pi pi-user d-lg-none"> </i>
+            <span class="heading my-auto"> Hồ sơ </span>
+          </a>
+        </li>
+        <li class="nav-item dropdown" dropdown *ngIf="null != user">
+          <a
+            class="nav-link"
+            data-toggle="dropdown"
+            dropdownToggle
+            href="javascript:;"
+            role="button"
+            (click)="logout()"
+          >
+            <i class="pi pi-sign-out d-lg-none"> </i>
+            <span class="heading my-auto"> Đăng xuất </span>
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="null == user">
+          <button
+            class="btn btn-outline-default btn-block"
+            (click)="routingAuthen()"
+            type="submit"
+          >
+            Tham gia
+          </button>
+        </li>
+      </ul>
+      <div class="navbar-translate mx-auto" *ngIf="!mobileView()">
+        <a class="navbar-brand ml-lg-5" (click)="redirectToHome()">
+          <img
+            style="margin-right: -7rem !important"
+            src="assets/img/brand/crel-full-color-tb.png"
+            id="brand-logo"
+            referrerpolicy="no-referrer"
+          />
+        </a>
+        <button
+          aria-controls="navbarSupportedContent"
+          aria-label="Toggle navigation"
+          class="navbar-toggler"
+          [attr.aria-expanded]="!isCollapsed"
+          (click)="isCollapsed = !isCollapsed"
+          id="example-header-2"
+          type="button"
+        >
+          <span class="navbar-toggler-icon"> </span>
+        </button>
+      </div>
+      <ul
+        class="nav navbar-nav navbar-nav-hover navbar-right"
+        *ngIf="!mobileView()"
+      >
+        <div class="row ml-8" *ngIf="user">
+          <div
+            class=" col-2 flex align-items-center justify-content-end"
+          ></div>
+          <div class="col-3 px-0 flex align-items-center justify-content-end">
+            <li class="mx-0 nav-item dropdown" dropdown>
+              <a
+                class="nav-link"
+                data-toggle="dropdown"
+                href="javascript:;"
+                role="button"
+              >
+                <img
+                  alt="Avatar"
+                  class="img-fluid rounded-circle shadow mr-2"
+                  src="{{ avatar }}"
+                  style="width: 2.5rem"
+                  referrerpolicy="no-referrer"
+                />
+                <b class="caret d-none d-lg-block d-xl-block"> </b>
+              </a>
+
+              <div class="dropdown-menu dropdown-menu-lg user-dropdown">
+                <div class="d-flex align-items-center mt-3">
+                  <h6 class="my-auto px-4">
+                    <strong>{{ user.name }}</strong>
+                  </h6>
+                </div>
+                <p-divider></p-divider>
+                <div class="dropdown-menu-inner mt-3">
+                  <a
+                    class="media d-flex align-items-center"
+                    href="javascript:;"
+                    (click)="redirectToAppointment()"
+                  >
+                    <div class="media-body ml-2">
+                      <h6 class="heading mx-auto my-auto">Quản lý cuộc hẹn</h6>
+                    </div>
+                  </a>
+                </div>
+                <div class="dropdown-menu-inner mt-3">
+                  <a
+                    class="media d-flex align-items-center"
+                    href="javascript:;"
+                    (click)="redirectToWishlist()"
+                  >
+                    <div class="media-body ml-2">
+                      <h6 class="heading mx-auto my-auto">
+                        Danh sách yêu thích
+                      </h6>
+                    </div>
+                  </a>
+                </div>
+                <div class="dropdown-menu-inner mt-3">
+                  <a
+                    class="media d-flex align-items-center"
+                    href="javascript:;"
+                    (click)="redirectToSavedSearch()"
+                  >
+                    <div class="media-body ml-2">
+                      <h6 class="heading mx-auto my-auto">
+                        Danh sách yêu cầu
+                      </h6>
+                    </div>
+                  </a>
+                </div>
+                <div class="dropdown-menu-inner mt-3">
+                  <a
+                    class="media d-flex align-items-center"
+                    href="javascript:;"
+                    (click)="redirectToContract()"
+                  >
+                    <div class="media-body ml-2">
+                      <h6 class="heading mx-auto my-auto">
+                        Thông tin hợp đồng
+                      </h6>
+                    </div>
+                  </a>
+                </div>
+                <p-divider></p-divider>
+                <div class="dropdown-menu-inner">
+                  <a
+                    class="media d-flex align-items-center"
+                    href="javascript:;"
+                    (click)="viewProfile()"
+                  >
+                    <div
+                      class="icon icon-shape bg-gradient-primary rounded-circle text-"
+                    >
+                      <i class="pi pi-user"> </i>
+                    </div>
+                    <div class="media-body ml-3">
+                      <h6 class="heading mx-auto my-auto">Hồ sơ</h6>
+                    </div>
+                  </a>
+                </div>
+                <div class="dropdown-menu-inner">
+                  <a
+                    class="media d-flex align-items-center"
+                    href="javascript:;"
+                    (click)="logout()"
+                  >
+                    <div
+                      class="icon icon-shape bg-gradient-primary rounded-circle text-"
+                    >
+                      <i class="pi pi-sign-out"> </i>
+                    </div>
+                    <div class="media-body ml-3">
+                      <h6 class="heading mx-auto my-auto">Đăng xuất</h6>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </li>
+          </div>
+          <div class="col-7 flex align-items-center">
+            <div class="row mx-0">
+              <div
+                class="col-12 my-0 py-0 flex justify-content-start align-items-center"
+              >
+                <p class="name-heading my-0">Thương hiệu kinh doanh</p>
+              </div>
+              <div
+                class="col-12 my-0 py-0 flex justify-content-start align-items-center"
+              >
+                <p class="my-0">{{ user.name }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <li class="nav-item left-login" *ngIf="!user">
+          <button
+            class="btn btn-default btn-block"
+            (click)="routingAuthen()"
+            type="submit"
+          >
+            Tham gia
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,60 @@
+.card {
+  padding: 0rem;
+  border: 1px solid #f8f9fa;
+  box-shadow: 0 4px 10px rgb(0 0 0 / 20%);
+}
+
+.title {
+  align-items: center;
+  max-height: 10vh;
+  h5 {
+    margin-left: 3rem;
+    margin-bottom: 0rem !important;
+  }
+}
+
+.property-list {
+  max-height: 72vh;
+}
+
+.broker {
+  height: 25vh;
+}
+
+.appointment {
+  height: 45vh;
+  overflow: auto;
+  &::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    background-color: #fff;
+  }
+  &::-webkit-scrollbar {
+    width: 12px;
+    background-color: #fff;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.3);
+    background-color: #e9ecef;
+  }
+}
+
+
+hr {
+  width: 100%;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+:host ::ng-deep .p-inputtext {
+  height: 98px !important;
+  width: 100% !important;
+}
+
+:host ::ng-deep .properties-list > .p-datatable-auto-layout > .p-datatable-wrapper {
+  min-width: 63vw;
+}
+
+:host ::ng-deep .p-inputtext {
+  height: unset !important;
+}

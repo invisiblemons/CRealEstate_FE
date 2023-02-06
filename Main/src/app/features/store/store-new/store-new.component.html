@@ -1,0 +1,90 @@
+<div id="map" hidden></div>
+<p-dialog
+  [(visible)]="isShowDialog"
+  [style]="{ width: '40vw' }"
+  header="Tạo mới cửa hàng"
+  [modal]="true"
+  styleClass="p-fluid"
+  (onHide)="hideDialog()"
+  [baseZIndex]="1100"
+  [closable]="false"
+  [draggable]="false"
+>
+  <ng-template pTemplate="content">
+    <div class="grid" *ngIf="isShowSkeleton">
+      <div class="sm:col-12 md:col-6">
+        <p-skeleton height="2rem" styleClass="mb-2"></p-skeleton>
+      </div>
+      <div class="sm:col-12 md:col-6">
+        <p-skeleton height="2rem" styleClass="mb-2"></p-skeleton>
+      </div>
+    </div>
+    <form novalidate (ngSubmit)="saveProject()" [formGroup]="storeForm">
+      <div class="grid" *ngIf="!isShowSkeleton">
+        <div class="form-group sm:col-12">
+          <label for="address">Địa chỉ <span class="required">*</span></label>
+          <input
+            #addressText
+            type="text"
+            pInputText
+            id="address"
+            class="w-100"
+            placeholder="Nhập địa chỉ cửa hàng"
+            [(ngModel)]="autocompleteInput"
+            (keyup)="onKeyAddress($event)"
+            formControlName="address"
+            [class]="displayMessage.address ? 'ng-dirty ng-invalid' : ''"
+          />
+          <p-message
+            severity="error"
+            *ngIf="displayMessage.address"
+            text="{{ displayMessage.address }}"
+          ></p-message>
+        </div>
+        <div class="form-group sm:col-12" *ngIf="isShowNameField">
+            <label for="name">Tên cửa hàng <span class="required">*</span></label>
+            <input
+              type="text"
+              pInputText
+              id="name"
+              autofocus
+              placeholder="Nhập tên cửa hàng"
+              appInputRestriction
+              formControlName="name"
+              [class]="displayMessage.name ? 'ng-dirty ng-invalid' : ''"
+            />
+            <p-message
+              severity="error"
+              *ngIf="displayMessage.name"
+              text="{{ displayMessage.name }}"
+            ></p-message>
+          </div>
+      </div>
+    </form>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <p-button
+      label="Huỷ bỏ"
+      icon="pi pi-times"
+      (onClick)="hideDialog()"
+      class="mr-2"
+      styleClass="p-button-secondary"
+      [pTooltip]="'Huỷ bỏ nhập dữ liệu'"
+    ></p-button>
+    <p-button
+      label="Tạo mới"
+      icon="pi pi-check"
+      type="submit"
+      [loading]="loading"
+      [disabled]="!storeForm.valid"
+      (onClick)="saveStore()"
+      class="custom-button"
+      [pTooltip]="
+        storeForm.valid
+          ? 'Tạo mới dữ liệu bạn đã nhập'
+          : 'Chỉ có thể tạo mới khi biểu mẫu không có lỗi'
+      "
+    ></p-button>
+  </ng-template>
+</p-dialog>

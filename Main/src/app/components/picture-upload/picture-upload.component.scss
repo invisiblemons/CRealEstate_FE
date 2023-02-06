@@ -1,0 +1,54 @@
+.fileinput input {
+  display: none;
+}
+:host ::ng-deep {
+  .p-ripple,
+  .p-button-icon-only {
+    background: #007bff;
+    border-radius: 30px;
+    background-color: #007bff;
+    background-image: linear-gradient(
+      to bottom left,
+      #007bff,
+      #0063cc,
+      #007bff
+    );
+    transition: all 0.15s ease;
+    box-shadow: none;
+    color: #ffffff;
+    width: 100%;
+  }
+
+  .p-button-icon-only {
+    padding: .5rem .8rem !important;
+  }
+  .p-fileupload-content {
+    width: 30vw;
+  }
+}
+:host ::ng-deep {
+  .p-ripple:hover,
+  .p-button-icon-only:hover {
+    background: #007bff;
+    border-radius: 30px;
+    background-color: #0063cc !important;
+    background-image: linear-gradient(
+      to bottom left,
+      #007bff,
+      #0063cc,
+      #007bff
+    ) !important;
+    transition: 0.3s ease-in-out;
+    background-position: bottom left;
+    color: #ffffff;
+    box-shadow: 0 4px 6px rgb(50 50 93 / 11%), 0 1px 3px rgb(0 0 0 / 8%);
+    width: 100%;
+  }
+  .p-button-icon-only:hover {
+    padding: .5rem .8rem !important;
+  }
+}
+.authen-page {
+  margin-bottom: 1rem;
+  min-width: 10rem;
+}

@@ -1,0 +1,81 @@
+<p-dialog
+  transitionOptions
+  [showHeader]="false"
+  contentStyleClass="content-style"
+  [visible]="isShowModal"
+  [closable]="true"
+  [dismissableMask]="true"
+  [style]="{ width: '50vw' }"
+  (onHide)="hideDialog()"
+  [modal]="true"
+  [baseZIndex]="10000"
+>
+  <div class="header-dialog">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-8">
+          <span>
+            <h2>
+              <i
+                class="pi pi-bell"
+                style="font-size: 2rem; margin-right: 0.5rem"
+              ></i
+              ><strong>Thông báo</strong>
+            </h2>
+          </span>
+        </div>
+        <div class="col-4 flex justify-content-end align-items-center">
+          <img
+            style="height: 3.5rem"
+            src="assets/img/brand/crel-full-color-tb.png"
+            id="brand-logo"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="content-dialog">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col" *ngIf="isVerified">
+          <ul>
+            <li>
+              Chúc mừng tài khoản "{{ name }}" đã đăng ký thành công tài
+              khoản tại CREL.
+            </li>
+            <li>
+              Hiện tại tài khoản đang được chờ phê duyệt, thời gian duyệt là từ
+              1 giờ cho đến 12 giờ làm việc sau khi đăng ký.
+            </li>
+            <li>
+              Vui lòng liên hệ thông qua địa chỉ email: "<a
+                href="mailto: crelfall2022@gmail.com"
+                >crelfall2022@gmail.com</a
+              >" để yêu cầu trợ giúp thêm..
+            </li>
+            <br />
+            <li>Cảm ơn quý khách đã tin tưởng và sử dụng CREL. Trân trọng!</li>
+          </ul>
+        </div>
+        <div
+          class="col flex justify-content-center align-items-center"
+          *ngIf="!isVerified"
+        >
+          <p>Bạn cần đăng nhập để sử dụng tính năng này.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-dialog">
+    <div class="flex align-items-center justify-content-center mb-3">
+      <button
+        pButton
+        pRipple
+        type="button"
+        label="Tôi đã hiểu"
+        (click)="hideDialog()"
+        class="p-button-raised"
+      ></button>
+    </div>
+  </div>
+</p-dialog>

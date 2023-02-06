@@ -1,0 +1,184 @@
+<div class="wrapper">
+  <div class="container-fluid px-4 pt-3">
+    <div class="row">
+      <div class="col-lg-12 col-md-12 mb-4">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="card title p-3">
+              <h5><strong>TẠO MỚI CUỘC HẸN</strong></h5>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-8 col-md-12 mb-2">
+        <div class="container pl-0">
+          <div class="row justify-content-center">
+            <div class="col-lg-12">
+              <div class="card property-list my-0" *ngIf="property">
+                <app-property-list-table
+                  [property]="property"
+                  [isCanEdit]="true"
+                  (showedProperty)="routingDetailProperty($event)"
+                  (isDeleted)="getDeletedStatus($event)"
+                ></app-property-list-table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-12 mb-2">
+        <div class="row justify-content-center">
+          <div class="col-12 mb-3">
+            <div class="card broker my-0">
+              <app-broker
+                [broker]="broker"
+                (openBrokerDetail)="openBrokerDetail()"
+              ></app-broker>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="card appointment my-0 p-3 pt-0">
+              <div class="container">
+                <div class="row">
+                  <div class="col pb-0">
+                    <h6><strong>Thông tin chi tiết cuộc hẹn</strong></h6>
+                    <hr class="my-0" />
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col mt-0 py-0">
+                    <form
+                      novalidate
+                      (ngSubmit)="createAppointment()"
+                      [formGroup]="appointmentForm"
+                    >
+                      <div
+                        class="mb-0 mt-3"
+                        *ngFor="let item of timeOptions; index as i"
+                      >
+                        <div
+                          class="flex align-items-center"
+                          *ngIf="timeOptions.length === 1"
+                        >
+                          Thời điểm
+                        </div>
+                        <div class="container">
+                          <div class="row">
+                            <div class="col-7 px-0 flex align-items-center">
+                              <div class="p-inputgroup">
+                                <span class="p-inputgroup-addon"
+                                  ><i class="pi pi-calendar-plus"></i
+                                ></span>
+
+                                <p-calendar
+                                  showButtonBar="true"
+                                  placeholder="Chọn ngày"
+                                  dateFormat="dd-mm-yy"
+                                  (onSelect)="onSelectDate($event)"
+                                  appInputRestriction
+                                  formControlName="onDate"
+                                  appendTo="body"
+                                  [minDate]="minDate"
+                                  [baseZIndex]="1100"
+                                  [class]="
+                                    displayMessage.onDate
+                                      ? 'ng-dirty ng-invalid w-100'
+                                      : ' w-100'
+                                  "
+                                ></p-calendar>
+                              </div>
+                            </div>
+                            <div class="col-5 px-0 flex align-items-center">
+                              <p-dropdown
+                                [options]="times"
+                                placeholder="Chọn giờ"
+                                (click)="clickTime()"
+                                (onChange)="onSelectTime($event)"
+                                optionDisabled="inactive"
+                                appendTo="body"
+                                optionLabel="label"
+                                [showClear]="true"
+                                appInputRestriction
+                                formControlName="onTime"
+                                [class]="
+                                  displayMessage.onTime
+                                    ? 'ng-dirty ng-invalid w-100'
+                                    : ' w-100'
+                                "
+                              ></p-dropdown>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="container">
+                        <div class="row">
+                          <div class="col-6 flex justify-content-start">
+                            <p-message
+                              *ngIf="displayMessage.onDate"
+                              severity="error"
+                              text="{{ displayMessage.onDate }}"
+                            ></p-message>
+                          </div>
+                          <div class="col-6 flex justify-content-end">
+                            <p-message
+                              *ngIf="displayMessage.onTime"
+                              severity="error"
+                              text="{{ displayMessage.onTime }}"
+                            ></p-message>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="mt-1 mb-2">
+                        <label>Lời nhắn</label>
+                        <textarea
+                          styleClass="description"
+                          pInputTextarea
+                          autoResize="autoResize"
+                          [(ngModel)]="description"
+                          formControlName="description"
+                        ></textarea>
+                      </div>
+
+                      <div
+                        class="button mt-2 d-flex flex-row align-items-center"
+                      >
+                        <button
+                          class="btn btn-default w-100"
+                          (click)="createAppointment()"
+                          [title]="
+                            !isDeleted
+                              ? 'Nhấn để tạo cuộc hẹn'
+                              : 'Chỉ có thể tạo cuộc hẹn khi có mặt bằng'
+                          "
+                          [disabled]="isDeleted || !appointmentForm.valid"
+                          *ngIf="!loading"
+                        >
+                          Tạo cuộc hẹn
+                        </button>
+                        <button
+                          class="btn btn-default w-100"
+                          [disabled]="true"
+                          *ngIf="loading"
+                        >
+                          <i class="pi pi-spin pi-spinner"></i>
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<router-outlet></router-outlet>
+<ng-container *ngIf="isShowBroker">
+  <app-broker-detail-root
+    [broker]="broker"
+    (statusBrokerDialog)="statusBrokerDialog()"
+  ></app-broker-detail-root>
+</ng-container>

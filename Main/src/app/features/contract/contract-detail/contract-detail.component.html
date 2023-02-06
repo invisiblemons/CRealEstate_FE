@@ -1,0 +1,192 @@
+<p-dialog
+  header="Chi tiết hợp đồng thuê"
+  [(visible)]="isShowDialog"
+  [style]="{ width: '80vw' }"
+  [modal]="true"
+  styleClass="p-fluid"
+  (onHide)="hideDialog()"
+  [dismissableMask]="true"
+  [closable]="true"
+  [draggable]="false"
+  [baseZIndex]="1100"
+>
+  <div class="grid" *ngIf="isShowSkeleton">
+    <div class="sm:col-12 md:col-6">
+      <p-skeleton height="2rem" styleClass="mb-2"></p-skeleton>
+    </div>
+    <div class="sm:col-12 md:col-6">
+      <p-skeleton height="2rem" styleClass="mb-2"></p-skeleton>
+    </div>
+    <div class="sm:col-12 md:col-6">
+      <p-skeleton height="2rem" styleClass="mb-2"></p-skeleton>
+    </div>
+    <div class="sm:col-12 md:col-6">
+      <p-skeleton height="2rem" styleClass="mb-2"></p-skeleton>
+    </div>
+    <div class="sm:col-12 md:col-6">
+      <p-skeleton height="2rem" styleClass="mb-2"></p-skeleton>
+    </div>
+    <div class="sm:col-12 md:col-6">
+      <p-skeleton height="2rem" styleClass="mb-2"></p-skeleton>
+    </div>
+    <div class="sm:col-12 md:col-6">
+      <p-skeleton height="2rem" styleClass="mb-2"></p-skeleton>
+    </div>
+    <div class="sm:col-12 md:col-6">
+      <p-skeleton height="2rem" styleClass="mb-2"></p-skeleton>
+    </div>
+    <div class="sm:col-12 md:col-6">
+      <p-skeleton height="2rem" styleClass="mb-2"></p-skeleton>
+    </div>
+    <div class="sm:col-12 md:col-6">
+      <p-skeleton height="2rem" styleClass="mb-2"></p-skeleton>
+    </div>
+    <div class="sm:col-12 md:col-6">
+      <p-skeleton height="2rem" styleClass="mb-2"></p-skeleton>
+    </div>
+    <div class="sm:col-12 md:col-6">
+      <p-skeleton height="2rem" styleClass="mb-2"></p-skeleton>
+    </div>
+    <div class="sm:col-12 md:col-6">
+      <p-skeleton height="2rem" styleClass="mb-2"></p-skeleton>
+    </div>
+    <div class="sm:col-12 md:col-6">
+      <p-skeleton height="2rem" styleClass="mb-2"></p-skeleton>
+    </div>
+    <div class="sm:col-12">
+      <p-skeleton height="4rem" styleClass="mb-2"></p-skeleton>
+    </div>
+  </div>
+  <div class="grid" *ngIf="!isShowSkeleton">
+    <div class="container-fluid px-5 mt-5">
+      <div class="row">
+        <div class="col-6" *ngIf="media&&media.length>0">
+          <p-galleria
+            [value]="media ? media : IMAGE_DEFAULT"
+            [responsiveOptions]="responsiveOptions"
+            [containerStyle]="{ 'max-width': '50vw' }"
+            [numVisible]="5"
+            [circular]="true"
+            [showItemNavigators]="true"
+            [showThumbnails]="false"
+            [showIndicators]="true"
+            [showItemNavigatorsOnHover]="true"
+            [showIndicatorsOnItem]="true"
+          >
+            <ng-template pTemplate="item" let-item>
+              <img [src]="item.link" style="width: 100%" />
+            </ng-template>
+            <ng-template pTemplate="thumbnail" let-item>
+              <div class="grid grid-nogutter justify-content-center">
+                <img [src]="item.link" />
+              </div>
+            </ng-template>
+          </p-galleria>
+        </div>
+        <div [class]="media&&media.length>0?'col-6 px-0':'col-12 px-0'">
+          <p-toolbar styleClass="mb-2">
+            <ng-template pTemplate="left"> </ng-template>
+
+            <ng-template pTemplate="right">
+              <button
+                class="btn btn-primary animation-on-hover mr-2"
+                (click)="downTemplate()"
+                pTooltip="Tải xuống hợp đồng"
+                [disabled]="isShowSkeleton"
+              >
+                <i class="pi pi-download"></i> Tải xuống
+              </button>
+            </ng-template>
+          </p-toolbar>
+          <div class="card custom-card mb-4">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-sm-5">
+                  <p class="mb-0">Trạng thái</p>
+                </div>
+                <div class="col-sm-7">
+                  <p-tag
+                    *ngIf="contract.status === 0"
+                    icon="pi pi-trash"
+                    severity="danger"
+                    value="Đã xoá"
+                    [rounded]="true"
+                  ></p-tag>
+                  <p-tag
+                    *ngIf="contract.status === 1"
+                    icon="pi pi-exclamation-triangle"
+                    severity="warning"
+                    value="Cần xác thực"
+                    [rounded]="true"
+                  ></p-tag>
+                  <p-tag
+                    *ngIf="contract.status === 2"
+                    icon="pi pi-check"
+                    severity="success"
+                    value="Hoạt động"
+                    [rounded]="true"
+                  ></p-tag>
+                </div>
+              </div>
+              <hr />
+              <div class="row">
+                <div class="col-sm-5">
+                  <p class="mb-0">Thời gian bắt đầu</p>
+                </div>
+                <div class="col-sm-7">
+                  <p class="text-muted mb-0">
+                    {{ contract.startDate | date: DATE_FORMAT }}
+                  </p>
+                </div>
+              </div>
+              <hr />
+              <div class="row">
+                <div class="col-sm-5">
+                  <p class="mb-0">Thời gian kết thúc</p>
+                </div>
+                <div class="col-sm-7">
+                  <p class="text-muted mb-0">
+                    {{ contract.endDate | date: DATE_FORMAT }}
+                  </p>
+                </div>
+              </div>
+              <hr />
+              <div class="row">
+                <div class="col-sm-5">
+                  <p class="mb-0">Ngày tạo hợp đồng</p>
+                </div>
+                <div class="col-sm-7">
+                  <p class="text-muted mb-0">
+                    {{ contract.createDate | date: DATE_FORMAT }}
+                  </p>
+                </div>
+              </div>
+              <hr />
+              <!-- <div class="row">
+                <div class="col-sm-5">
+                  <p class="mb-0">Điều khoản</p>
+                </div>
+                <div class="col-sm-7">
+                  <p class="text-muted mb-0">
+                    {{ contract.paymentTerm }}
+                  </p>
+                </div>
+              </div>
+              <hr /> -->
+              <div class="row">
+                <div class="col-sm-5">
+                  <p class="mb-0">Giá thuê</p>
+                </div>
+                <div class="col-sm-7">
+                  <p class="text-muted mb-0">
+                    {{ contract.price / 1000000 | number: "1.0-2" }} triệu
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</p-dialog>

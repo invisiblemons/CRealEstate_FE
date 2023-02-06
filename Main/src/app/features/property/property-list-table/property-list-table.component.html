@@ -1,0 +1,92 @@
+<p-table
+  #datatable
+  [value]="properties"
+  responsiveLayout="scroll"
+  [columns]="selectedColumns"
+  [autoLayout]="true"
+  class="properties-list"
+>
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <ng-container *ngFor="let col of columns" [ngSwitch]="col.field">
+        <th *ngSwitchDefault [ngStyle]="{ textAlign: col.headerAlign, whiteSpace: col.layout }">
+          {{ col.header }}
+        </th>
+      </ng-container>
+    </tr>
+  </ng-template>
+
+  <ng-template
+    pTemplate="body"
+    let-property
+    let-columns="columns"
+    let-i="rowIndex"
+  >
+    <tr>
+      <ng-container *ngFor="let col of columns" [ngSwitch]="col.field">
+        <td
+          *ngSwitchCase="'no'"
+          [ngStyle]="{ textAlign: col.textAlign, whiteSpace: col.layout }"
+          attr.title="Nhấn để xem chi tiết mặt bằng"
+        >
+          {{ i + 1 }}
+        </td>
+        <td
+          *ngSwitchCase="'popImage'"
+          (click)="selectRow(property)"
+          attr.title="Nhấn để xem chi tiết mặt bằng"
+        >
+          <div class="image">
+            <img
+              [src]="
+                property.mainImage !== 0
+                  ? property.mainImage.link
+                  : 'assets/img/bg-placeholder.png'
+              "
+              class="rounded"
+              width="200"
+            />
+          </div>
+        </td>
+        <td
+          *ngSwitchDefault
+          attr.title="Nhấn để xem chi tiết mặt bằng"
+          [ngStyle]="{ textAlign: col.textAlign, whiteSpace: col.layout }"
+          (click)="selectRow(property)"
+        >
+          {{
+            col.type === "money"
+              ? ((property[col.field]/1000000) | number: "1.0-2") + " triệu/tháng"
+              : property[col.field]
+          }}
+        </td>
+        <td *ngSwitchCase="'action'" [ngStyle]="{ textAlign: col.textAlign, whiteSpace: col.layout }">
+          <button
+            [disabled]="property.status === 0 ? true : false"
+            class="btn btn-danger btn-round animation-on-hover btn-icon"
+            (click)="deleteProperty(property)"
+            pTooltip="Xoá"
+          >
+            <i class="pi pi-times"> </i>
+          </button>
+        </td>
+      </ng-container>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td colspan="5" *ngIf="isShowSpin" class="text-center">
+        <p-progressSpinner
+          [style]="{ width: '50px', height: '50px' }"
+          styleClass="custom-spinner"
+          strokeWidth="8"
+          fill="#EEEEEE"
+          animationDuration=".5s"
+        ></p-progressSpinner>
+      </td>
+      <td colspan="5" *ngIf="!isShowSpin" class="text-center">
+        Không có bất động sản thương mại.
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

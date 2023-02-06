@@ -1,0 +1,29 @@
+::ng-deep {
+  .p-paginator {
+    color: #2576bb;
+    .p-paginator-current {
+      color: #2576bb;
+    }
+  }
+  .p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
+    background: #2576bb !important;
+    color: #fff !important;
+  }
+  .p-paginator .p-paginator-pages .p-paginator-page {
+    color: #2576bb;
+  }
+  .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
+    background: #2576bb !important;
+  }
+
+  .p-datatable-auto-layout > .p-datatable-wrapper {
+    max-height: 64vh;
+    min-height: 59vh;
+    overflow: auto;
+  }
+}
+.card {
+  padding: 0rem;
+  border: unset;
+  box-shadow: 0 4px 10px rgb(0 0 0 / 20%);
+}

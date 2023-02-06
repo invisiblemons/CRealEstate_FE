@@ -1,0 +1,196 @@
+<p-dialog
+  [(visible)]="isShowDialog"
+  [style]="{ width: '80rem' }"
+  header="Cập nhật thông tin tài khoản mới"
+  [modal]="true"
+  styleClass="p-fluid"
+  (onHide)="hideDialog()"
+  [dismissableMask]="false"
+  [baseZIndex]="1001"
+  [closable]="false"
+>
+  <form
+    novalidate
+    style="text-align: start"
+    (ngSubmit)="updateUser()"
+    [formGroup]="updateForm"
+  >
+    <div class="grid">
+      <div class="sm:col-3">
+        <div class="flex justify-content-center">
+          <app-picture-upload
+            [imgSrc]="brand.avatarLink"
+            (outputImg)="getImgFromChild($event)"
+            [avatar]="true"
+          ></app-picture-upload>
+        </div>
+      </div>
+      <div class="sm:col-9">
+        <div class="grid">
+          
+          <div class="sm:col-12 md:col-6">
+            <label for="email"
+              >Địa chỉ Email <span class="required">*</span></label
+            >
+            <input
+            (change)="onChangeEmail()"
+              type="email"
+              id="email"
+              placeholder="Nhập địa chỉ email"
+              pInputText
+              [(ngModel)]="brand.email"
+              appInputRestriction
+              formControlName="email"
+              [class]="displayMessage.email ? 'ng-dirty ng-invalid' : ''"
+            />
+            <p-message
+              severity="error"
+              *ngIf="displayMessage.email"
+              text="{{ displayMessage.email }}"
+            ></p-message>
+          </div>
+          <div class="sm:col-12 md:col-6">
+            <label for="name"
+              >Tên thương hiệu <span class="required">*</span></label
+            >
+            <input
+              id="name"
+              type="text"
+              placeholder="Nhập tên thương hiệu"
+              pInputText
+              [(ngModel)]="brand.name"
+              appInputRestriction
+              formControlName="name"
+              [class]="displayMessage.name ? 'ng-dirty ng-invalid' : ''"
+            />
+            <p-message
+              severity="error"
+              *ngIf="displayMessage.name"
+              text="{{ displayMessage.name }}"
+            ></p-message>
+          </div>
+          <!-- <div class="  col-12 md:col-6  ">
+            <div class="flex  justify-content-start align-items-center">
+              <div class="field">
+                <label for="birthday"  > Ngày sinh</label>
+                <p-calendar
+                  inputId="birthday"
+                  appendTo="body"
+                  [(ngModel)]="admin.birthday"
+                  dateFormat="dd-mm-yy"
+                  [showIcon]="true"
+                  name="birthday"
+                ></p-calendar>
+              </div>
+            </div>
+          </div> -->
+
+          <div class="sm:col-12 md:col-6">
+            <label for="industry"
+              >Ngành kinh doanh <span class="required">*</span></label
+            >
+            <p-dropdown
+              emptyMessage="Danh sách trống"
+              id="industry"
+              [options]="industries"
+              [(ngModel)]="selectedIndustry"
+              placeholder="Chọn ngành kinh doanh"
+              optionLabel="name"
+              (onClick)="loadIndustries()"
+              [style]="{ 'z-index': '1002' }"
+              appInputRestriction
+              formControlName="industry"
+              [ngClass]="{ 'is-invalid': displayMessage.industry }"
+              inputStyleClass="form-control"
+            ></p-dropdown>
+            <span class="invalid-feedback">
+              {{ displayMessage.industry }}
+            </span>
+          </div>
+          <div class="sm:col-12 md:col-6">
+            <label for="phoneNumber"
+              >Số điện thoại <span class="required">*</span></label
+            >
+            <p-inputMask
+            (change)="onChangePhone()"
+              id="phoneNumber"
+              [(ngModel)]="brand.phoneNumber"
+              pKeyFilter="int"
+              appInputRestriction
+              formControlName="phoneNumber"
+              [class]="displayMessage.phoneNumber ? 'ng-dirty ng-invalid' : ''"
+              placeholder="Nhập số điện thoại"
+              mask="9999 999 999"
+            ></p-inputMask>
+            <p-message
+              severity="error"
+              *ngIf="displayMessage.phoneNumber"
+              text="{{ displayMessage.phoneNumber }}"
+            ></p-message>
+          </div>
+          <div class="sm:col-12 md:col-6">
+            <label for="registrationNumber"
+              >Mã số doanh nghiệp <span class="required">*</span></label
+            >
+            <p-inputMask
+              id="registrationNumber"
+              [(ngModel)]="brand.registrationNumber"
+              pKeyFilter="int"
+              appInputRestriction
+              formControlName="registrationNumber"
+              [class]="
+                displayMessage.registrationNumber ? 'ng-dirty ng-invalid' : ''
+              "
+              placeholder="Mã số doanh nghiệp"
+              mask="9999999999"
+            ></p-inputMask>
+            <p-message
+              severity="error"
+              *ngIf="displayMessage.registrationNumber"
+              text="{{ displayMessage.registrationNumber }}"
+            ></p-message>
+          </div>
+          <div class="sm:col-12">
+            <label for="description">Mô tả</label>
+            <dx-html-editor
+              [height]="175"
+              [valueType]="'html'"
+              [(value)]="brand.description"
+            >
+              <dxo-toolbar>
+                <dxi-item name="undo"></dxi-item>
+                <dxi-item name="redo"></dxi-item>
+                <dxi-item name="separator"></dxi-item>
+                <dxi-item name="bold"></dxi-item>
+                <dxi-item name="italic"></dxi-item>
+                <dxi-item name="strike"></dxi-item>
+                <dxi-item name="underline"></dxi-item>
+                <dxi-item name="separator"></dxi-item>
+                <dxi-item name="alignLeft"></dxi-item>
+                <dxi-item name="alignCenter"></dxi-item>
+                <dxi-item name="alignRight"></dxi-item>
+                <dxi-item name="alignJustify"></dxi-item>
+              </dxo-toolbar>
+            </dx-html-editor>
+          </div>
+          <div class="sm:col-12">
+            <div class="flex justify-content-center">
+              <p-button
+                label="Cập nhật "
+                type="submit"
+                [loading]="loading"
+                [disabled]="!updateForm.valid"
+                class="custom-button"
+                [pTooltip]="
+                updateForm.valid
+                    ? 'Lưu dữ liệu bạn đã nhập'
+                    : 'Chỉ có thể lưu khi biểu mẫu không có lỗi'
+                "
+              ></p-button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</p-dialog>

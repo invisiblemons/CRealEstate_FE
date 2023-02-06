@@ -1,0 +1,261 @@
+<div class="wrapper flex justify-content-start">
+  <div class="container-fluid">
+    <div class="flex">
+      <div class="flex align-items-center justify-content-center mr-3">
+        <form (submit)="searchPlaces()">
+          <div class="p-inputgroup">
+            <input
+              #addressText
+              type="text"
+              pInputText
+              placeholder="Nhập khu vực, địa chỉ bạn muốn tìm kiếm"
+              [(ngModel)]="autocompleteInput"
+              (keyup)="onKeyAddress($event)"
+            />
+            <button
+              type="submit"
+              pButton
+              pRipple
+              label="Tìm kiếm"
+              class="search"
+              (click)="searchPlaces()"
+            ></button>
+          </div>
+        </form>
+      </div>
+
+      <!-- <div class="flex align-items-center justify-content-center mr-3">
+        <p-multiSelect
+          [options]="categories"
+          [(ngModel)]="selectedCategories"
+          defaultLabel="Ngành kinh doanh"
+          optionLabel="name"
+          (onChange)="selectIndustries($event)"
+        ></p-multiSelect>
+      </div> -->
+      <div class="flex align-items-center justify-content-center mr-3">
+        <button
+          [label]="
+            isQuickPrice === undefined
+              ? 'Khoảng giá'
+              : isQuickPrice
+              ? quickRangePrice.label
+              : rangePrice[1] === rangePrice[0]
+              ? rangePrice[0] + ' triệu'
+              : rangePrice[0] + ' triệu đến ' + rangePrice[1] + ' triệu'
+          "
+          class="p-button-outlined button-filter"
+          pButton
+          pRipple
+          type="button"
+          (click)="price.toggle($event)"
+          icon="pi pi-angle-down"
+          iconPos="right"
+        ></button>
+        <p-overlayPanel
+          #price
+          [showCloseIcon]="true"
+          [style]="{ width: '25rem' }"
+        >
+          <ng-template pTemplate>
+            <div class="quick">
+              <h6><strong>Chọn nhanh khoảng giá</strong></h6>
+              <div class="grid">
+                <div
+                  class="col-6"
+                  *ngFor="let quickRangePrice of quickRangePrices"
+                >
+                  <button
+                    pButton
+                    pRipple
+                    type="button"
+                    [label]="quickRangePrice.label"
+                    class="p-button-text"
+                    (click)="selectQuickRangePrice(quickRangePrice)"
+                  ></button>
+                </div>
+              </div>
+            </div>
+            <div class="slider">
+              <h6><strong>Hoặc chọn giá (triệu)</strong></h6>
+              <div class="grid">
+                <div class="dx-field custom-height-slider">
+                  <div class="dx-field-value">
+                    <dx-range-slider
+                      [min]="0"
+                      [max]="10000"
+                      [(start)]="rangePrice[0]"
+                      [(end)]="rangePrice[1]"
+                      [tooltip]="tooltip"
+                      [label]="label"
+                      (onValueChanged)="handleValuePriceChange($event)"
+                    ></dx-range-slider>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="range-panel">
+              <div
+                class="col-12 flex align-items-center justify-content-between"
+              >
+                <button
+                  class="btn btn-outline-default btn-block mr-2"
+                  (click)="resetPrice()"
+                  type="submit"
+                >
+                  Đặt lại
+                </button>
+                <button
+                  class="btn btn-default btn-block ml-2"
+                  (click)="filterPrice(price)"
+                  type="submit"
+                >
+                  Áp dụng
+                </button>
+              </div>
+            </div>
+          </ng-template>
+        </p-overlayPanel>
+      </div>
+      <div class="flex align-items-center justify-content-center mr-3">
+        <button
+          [label]="
+            isQuickArea === undefined
+              ? 'Diện tích'
+              : isQuickArea
+              ? quickRangeArea.label
+              : rangeArea[1] === rangeArea[0]
+              ? rangeArea[0] + ' m²'
+              : rangeArea[0] + ' m² đến ' + rangeArea[1] + ' m²'
+          "
+          class="p-button-outlined button-filter"
+          pButton
+          pRipple
+          (click)="area.toggle($event)"
+          icon="pi pi-angle-down"
+          iconPos="right"
+        ></button>
+        <p-overlayPanel
+          #area
+          [showCloseIcon]="true"
+          [style]="{ width: '25rem' }"
+        >
+          <ng-template pTemplate>
+            <div class="quick">
+              <h6><strong>Chọn nhanh diện tích</strong></h6>
+              <div class="grid">
+                <div
+                  class="col-6"
+                  *ngFor="let quickRangeArea of quickRangeAreas"
+                >
+                  <button
+                    pButton
+                    pRipple
+                    type="button"
+                    [label]="quickRangeArea.label"
+                    class="p-button-text"
+                    (click)="selectQuickRangeArea(quickRangeArea)"
+                  ></button>
+                </div>
+              </div>
+            </div>
+            <div class="slider">
+              <h6><strong>Hoặc chọn diện tích (m²)</strong></h6>
+              <div class="grid">
+                <div class="dx-field custom-height-slider">
+                  <div class="dx-field-value">
+                    <dx-range-slider
+                      [min]="0"
+                      [max]="10000"
+                      [(start)]="rangeArea[0]"
+                      [(end)]="rangeArea[1]"
+                      [tooltip]="tooltip"
+                      [label]="label"
+                      (onValueChanged)="handleValueAreaChange($event)"
+                    ></dx-range-slider>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="range-panel">
+              <div
+                class="col-12 flex align-items-center justify-content-between"
+              >
+                <button
+                  class="btn btn-outline-default btn-block mr-2"
+                  (click)="resetArea()"
+                  type="submit"
+                >
+                  Đặt lại
+                </button>
+                <button
+                  class="btn btn-default btn-block ml-2"
+                  (click)="filterArea(area)"
+                  type="submit"
+                >
+                  Áp dụng
+                </button>
+              </div>
+            </div>
+          </ng-template>
+        </p-overlayPanel>
+      </div>
+      <!-- <div class="flex align-items-center justify-content-center mr-3">
+        <button
+          label="Thêm"
+          class="p-button-outlined button-filter"
+          pButton
+          pRipple
+          (click)="extra.toggle($event)"
+          icon="pi pi-angle-down"
+          iconPos="right"
+        ></button>
+        <p-overlayPanel
+          #extra
+          [showCloseIcon]="false"
+          [style]="{ width: '25rem' }"
+        >
+          <ng-template pTemplate>
+            <div class="quick">
+              <h6><strong>Chọn hướng</strong></h6>
+              <div class="grid">
+                <div class="col-6" *ngFor="let direction of directions">
+                  <div class="field-checkbox pl-2 pr-2">
+                    <p-checkbox
+                      [name]="direction.label"
+                      [value]="direction.value"
+                      [inputId]="direction.value"
+                      [(ngModel)]="selectedDirections"
+                    ></p-checkbox>
+                    <label [for]="direction.value">{{ direction.label }}</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="range-panel">
+              <div
+                class="col-12 flex align-items-center justify-content-between"
+              >
+                <button
+                  class="btn btn-outline-default btn-block mr-2"
+                  (click)="resetExtra()"
+                  type="submit"
+                >
+                  Đặt lại
+                </button>
+                <button
+                  class="btn btn-default btn-block ml-2"
+                  (click)="extra.hide()"
+                  (click)="filterExtra(extra)"
+                  type="submit"
+                >
+                  Áp dụng
+                </button>
+              </div>
+            </div>
+          </ng-template>
+        </p-overlayPanel>
+      </div> -->
+    </div>
+  </div>
+</div>

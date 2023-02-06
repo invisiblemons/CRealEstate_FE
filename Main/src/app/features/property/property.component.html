@@ -1,0 +1,29 @@
+<div class="all-filter">
+  <app-filter
+    (getPlaces)="getPlaces()"
+    (getAllProperties)="getAllProperties()"
+    (autocomplete)="autocomplete()"
+    (searchFields)="getSumarySearchFields($event)"
+  ></app-filter>
+  <div class="main-body">
+    <div class="property">
+      <div class="property-left">
+        <app-property-map
+          (getLocationByPlaceId)="getLocationByPlaceId($event)"
+          [propertiesData]="properties"
+          (showDialog)="showDialog($event)"
+          [specificProperty]="specificProperty"
+        ></app-property-map>
+      </div>
+      <div class="property-right">
+        <app-property-list
+          [isLoading]="loading"
+          [propertiesData]="properties"
+          (showDialog)="showDialog($event)"
+          (showSpecificProperty)="showSpecificProperty($event)"
+        ></app-property-list>
+      </div>
+    </div>
+  </div>
+</div>
+<router-outlet></router-outlet>

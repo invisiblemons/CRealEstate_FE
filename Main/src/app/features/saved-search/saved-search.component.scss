@@ -1,0 +1,53 @@
+.card {
+  padding: 1rem;
+  border: unset;
+  box-shadow: 0 4px 10px rgb(0 0 0 / 20%);
+}
+
+.card-request {
+  max-width: 100%;
+  height: 100%;
+  display: block;
+  min-width: 186px;
+  border-radius: 10px;
+}
+::ng-deep {
+  .custom-description {
+    border: none;
+    border-style: unset !important;
+  }
+  .dx-htmleditor-content {
+    padding: 0;
+  }
+}
+.title {
+  align-items: center;
+  max-height: 10vh;
+  h5 {
+    margin-bottom: 0rem !important;
+  }
+}
+.btn-default {
+  background-color: white;
+  color: #0857a0;
+  border-color: #0857a0;
+  box-shadow: 0 3px 1px -2px rgb(0 0 0 / 20%), 0 2px 2px 0 rgb(0 0 0 / 14%),
+    0 1px 5px 0 rgb(0 0 0 / 12%);
+  &:hover {
+    background-color: #074783;
+    color: white;
+    transform: none;
+  }
+}
+
+.btn-danger {
+  border-color: #fc4530;
+  background: white;
+  color: #e64b3a;
+  box-shadow: 0 3px 1px -2px #0003, 0 2px 2px #00000024, 0 1px 5px #0000001f;
+
+  &:hover {
+    background: #e64b3a;
+    color: white;
+  }
+}

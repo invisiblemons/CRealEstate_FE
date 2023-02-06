@@ -1,0 +1,225 @@
+* {
+  font-family: "Montserrat", sans-serif;
+  &::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    background-color: #fff;
+    &:hover {
+      background-color: #666666;
+    }
+  }
+  &::-webkit-scrollbar {
+    height: 12px;
+    width: 8px;
+    background-color: #fff;
+    &:hover {
+      background-color: #666666;
+    }
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    -webkit-box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.3);
+    background-color: #e9ecef;
+  }
+}
+b,
+strong {
+  font-weight: bold;
+}
+.fa-classic,
+.fa-regular,
+.fa-solid,
+.far,
+.fas {
+  font-family: "Font Awesome 6 Free" !important;
+}
+
+//config icon
+.pi-sign-out:before,
+.pi-user:before {
+  font-weight: 600;
+  font-weight: bolder;
+  font-size: larger;
+}
+
+::ng-deep .custom-spinner .p-progress-spinner-circle {
+  animation: custom-progress-spinner-color 6s ease-in-out infinite;
+}
+
+::ng-deep .p-overlaypanel .p-overlaypanel-close {
+  background: #2576bb;
+}
+@keyframes custom-progress-spinner-color {
+  100%,
+  0% {
+    stroke: #2576bb;
+  }
+  40% {
+    stroke: #2576bb;
+  }
+  66% {
+    stroke: #2576bb;
+  }
+  80%,
+  90% {
+    stroke: #2576bb;
+  }
+}
+
+:host ::ng-deep .pi {
+  font-size: 0.8rem;
+}
+
+:host ::ng-deep .p-dropdown {
+  width: 100%;
+}
+
+//config status
+.expired {
+  background-image: linear-gradient(
+    to bottom left,
+    #65686d,
+    #44464b,
+    #5a5c60
+  ) !important;
+}
+.p-tag.p-tag-success {
+  background-color: #03c554 !important;
+}
+.p-tag.p-tag-warning {
+  background-color: #fffadf !important;
+}
+.p-tag.p-tag-info {
+  background-color: #2576bb !important;
+}
+.p-tag.p-tag-danger {
+  background-color: #ff3a24 !important;
+}
+
+:host ::ng-deep {
+  .btn-success {
+    background-color: #03c554;
+    border-color: #059943;
+  }
+  .btn-info {
+    background-color: #2576bb;
+    border-color: #4f91cb;
+  }
+  .btn-danger {
+    background-color: #fc4530;
+    border-color: #e64b3a;
+  }
+  .p-overlaypanel .p-overlaypanel-close{
+    background: #2576bb !important;
+  }
+}
+
+#swal2-content {
+  font-weight: 400;
+}
+
+.swal2-container {
+  z-index: 13000 !important;
+}
+
+//editor
+::ng-deep .dx-htmleditor-content img {
+  vertical-align: middle;
+  padding-right: 10px;
+}
+::ng-deep .dx-htmleditor-content * {
+  font-family: "Montserrat", sans-serif !important;
+  color: #212529 !important;
+  font-size: 1rem !important;
+}
+
+::ng-deep .value-content {
+  margin-top: 20px;
+  overflow: auto;
+  height: 110px;
+  width: 100%;
+  white-space: pre-wrap;
+}
+
+::ng-deep .options {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: rgba(191, 191, 191, 0.15);
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.invalid-feedback {
+  color: #fd5d93;
+}
+
+.dropdown-menu {
+  padding: 0 0.5rem 0 !important;
+}
+
+.bg-gradient-primary {
+  background: white !important;
+}
+
+.required {
+  color: red;
+}
+
+.user-dropdown {
+  right: 0px !important;
+  left: unset !important;
+  &:before {
+    right: 50px !important;
+    left: unset !important;
+  }
+}
+
+//Scroll Top
+:host ::ng-deep .custom-scrolltop {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 4px;
+  background-color: #2576bb;
+
+  &:hover {
+    background-color: #2576bb;
+  }
+
+  .p-scrolltop-icon {
+    font-size: 1rem;
+  }
+}
+
+.text-primary-color {
+  color: #2576bb !important;
+  &:hover {
+    color: #0857a0 !important;
+  }
+}
+
+:host
+  ::ng-deep
+  .p-dropdown-panel
+  .p-dropdown-items
+  .p-dropdown-item.p-highlight {
+  background: #2576bb !important;
+}
+
+
+::ng-deep {
+  .p-button {
+    background: #2576BB;
+    border-color: #2576BB;
+    &:enabled:hover {
+      background: #256caa;
+      border-color: #1b5a91;
+    }
+  }
+}
+
+::ng-deep {
+  .p-dialog {
+    border-radius: 10px;
+    overflow: hidden;
+  }
+}

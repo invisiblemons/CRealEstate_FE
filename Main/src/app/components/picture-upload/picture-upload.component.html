@@ -1,0 +1,77 @@
+<div class="fileinput text-center" *ngIf="avatar">
+  <input type="file" (change)="handleImageChange($event)" #fileInput accept="image/*" />
+  <div class="thumbnail" [ngClass]="{ 'img-circle': avatar }">
+    <img [src]="imgSrcPreviewUrl" referrerpolicy="no-referrer" alt="Ảnh đại diện" />
+  </div>
+  <div>
+    <button
+      type="button"
+      *ngIf="imgSrc === null && avatar"
+      (click)="handleClick()"
+      class="btn btn-fill btn-primary authen-page"
+    >
+      <i class="pi pi-cloud-upload"> </i> Thêm ảnh
+    </button>
+    <br>
+    <span *ngIf="imgSrc !== null">
+      <button
+        type="button"
+        (click)="handleClick()"
+        class="btn btn-fill btn-primary authen-page mr-2"
+      >
+        <i class="pi pi-pencil"></i> Thay đổi
+      </button>
+    </span>
+  </div>
+</div>
+<div class="fileinput text-center" *ngIf="!avatar">
+  <p-fileUpload
+    name="demo[]"
+    (onSelect)="handleImageChange($event)"
+    multiple="multiple"
+    accept="image/*"
+    maxFileSize="150000000"
+    chooseLabel="Thêm ảnh"
+    cancelLabel="Loại bỏ"
+    [showUploadButton]="false"
+  >
+    <ng-template pTemplate="content">
+      <ng-container *ngIf="imgSrcArray">
+        <div
+          class="p-fileupload-files ng-star-inserted"
+          *ngFor="let file of imgSrcArray"
+        >
+          <div class="ng-star-inserted">
+            <div class="p-fileupload-row ng-star-inserted">
+              <div>
+                <img
+                  src="{{ file.link }}"
+                  width="50"
+                  class="ng-star-inserted"
+                />
+              </div>
+              <div>---</div>
+              <div>---</div>
+              <div>
+                <button
+                  type="button"
+                  icon="pi pi-eye-slash"
+                  pbutton=""
+                  ng-reflect-icon="pi pi-eye-slash"
+                  class="p-button p-component p-button-icon-only"
+                  (click)="remove(file)"
+                >
+                  <span
+                    class="p-button-icon pi pi-eye-slash"
+                    aria-hidden="true"
+                  ></span
+                  ><span aria-hidden="true" class="p-button-label">&nbsp;</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </ng-template>
+  </p-fileUpload>
+</div>

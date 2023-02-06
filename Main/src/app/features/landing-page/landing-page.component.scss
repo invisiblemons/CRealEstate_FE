@@ -1,0 +1,73 @@
+canvas {
+  display: block;
+  vertical-align: bottom;
+}
+
+/* ---- particles.js container ---- */
+
+#particles-js {
+  position: absolute;
+  background-size: cover;
+  background-position: center center;
+  width: 100%;
+  height: 100%;
+  margin-top: -1rem;
+}
+
+/* ---- stats.js ---- */
+
+.count-particles {
+  background: #000022;
+  position: absolute;
+  top: 48px;
+  left: 0;
+  width: 80px;
+  color: #13e8e9;
+  font-size: 0.8em;
+  text-align: left;
+  text-indent: 4px;
+  line-height: 14px;
+  padding-bottom: 2px;
+  font-weight: bold;
+}
+
+.js-count-particles {
+  font-size: 1.1em;
+}
+
+#stats,
+.count-particles {
+  -webkit-user-select: none;
+}
+
+#stats {
+  border-radius: 3px 3px 0 0;
+  overflow: hidden;
+}
+
+.count-particles {
+  border-radius: 0 0 3px 3px;
+}
+
+#accordionExample .card {
+  width: 100%;
+}
+
+.main-image {
+  height: 500px;
+}
+
+.main-container {
+  margin-top: 10rem;
+}
+.btn-default:hover {
+  color: #fff;
+  background-color: #0857a0;
+  border-color: #0078d7;
+  border-width: 2px;
+  padding: 14px 40px;
+}
+.btn-default {
+  padding: 15px 40px 15px 40px;
+  text-transform: uppercase;
+}

@@ -1,0 +1,51 @@
+.user:hover {
+    border: 0.5px solid #cccccc;
+    box-shadow: 0 3px 10px #2020201a;
+    border-radius: 40px;
+
+    a {
+        padding: 0.7rem 1rem;
+    }
+}
+.white {
+    color: white !important;
+}
+
+.avatar-mobile {
+    margin: 0 3rem;
+}
+
+.logo-mobile {
+    margin-left: 3rem;
+}
+
+.active a .nav-link-inner--text{
+    border-bottom: solid 3px #2576bb;
+    color: #2576bb;
+}
+
+:host ::ng-deep .p-badge {
+    background: #2576bb;
+}
+.appms {
+    cursor: pointer;
+}
+
+a {
+    cursor: pointer;
+}
+
+.caret {
+    position: absolute;
+    left: 96%;
+    top: 55%;
+    margin-left: 0;
+  }
+  .name-heading {
+    font-weight: bold;
+    font-size: small;
+  }
+  
+  .left-login {
+    margin-left: 10rem;
+  }

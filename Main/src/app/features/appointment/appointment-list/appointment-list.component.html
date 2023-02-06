@@ -1,0 +1,397 @@
+<div class="wrapper">
+  <div class="container-fluid px-4 pt-3">
+    <div class="row">
+      <div class="col-lg-12 col-lg-12 mb-4">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="card title p-3">
+              <h5><strong>QUẢN LÝ CUỘC HẸN</strong></h5>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-12 col-lg-4 mb-2">
+        <div class="card left-section">
+          <full-calendar #calendar [options]="calendarOptions"></full-calendar>
+        </div>
+      </div>
+      <div class="col-sm-12 col-lg-8 mb-2">
+        <div class="card right-section">
+          <p-table
+            #datatable
+            [value]="appointmentsDataTable"
+            responsiveLayout="scroll"
+            [resizableColumns]="true"
+            [responsive]="true"
+            [rowHover]="false"
+            [columns]="selectedColumns"
+            [autoLayout]="true"
+            dataKey="id"
+            class="appms-list"
+            [paginator]="true"
+            [rows]="TABLE_CONFIG.ROWS"
+            [showCurrentPageReport]="true"
+            currentPageReportTemplate="Hiển thị từ {first} đến {last} của {totalRecords} mục"
+            [rowsPerPageOptions]="TABLE_CONFIG.ROWS_PER_PAGE"
+            styleClass="p-sticky p-datatable-striped"
+          >
+            <ng-template pTemplate="header" let-columns>
+              <tr>
+                <th style="width: 3rem">Chi tiết</th>
+                <ng-container
+                  *ngFor="let col of columns"
+                  [ngSwitch]="col.field"
+                >
+                  <th
+                    *ngSwitchCase="'status'"
+                    [ngStyle]="{ textAlign: col.headerAlign }"
+                  >
+                    <div class="p-d-flex p-jc-between p-ai-center">
+                      Trạng thái
+                      <p-columnFilter
+                        field="status"
+                        matchMode="equals"
+                        [display]="'menu'"
+                        [showAddButton]="false"
+                        [showMatchModes]="false"
+                        [showOperator]="false"
+                        [showClearButton]="false"
+                        [showApplyButton]="false"
+                      >
+                        <ng-template
+                          pTemplate="filter"
+                          let-value
+                          let-filter="filterCallback"
+                        >
+                          <p-dropdown
+                            emptyMessage="Danh sách trống"
+                            [ngModel]="value"
+                            [options]="statuses"
+                            (onChange)="filter($event.value)"
+                            placeholder="Chọn trạng thái"
+                            [showClear]="true"
+                            [scrollHeight]="240"
+                          >
+                            <ng-template let-option pTemplate="item">
+                              <p-tag
+                                *ngIf="option.value === 1"
+                                icon="pi pi-exclamation-triangle"
+                                severity="warning"
+                                value="{{ option.label }}"
+                                [rounded]="true"
+                              ></p-tag>
+                              <p-tag
+                                *ngIf="option.value === 2"
+                                icon="pi pi-info-circle"
+                                severity="info"
+                                value="{{ option.label }}"
+                                [rounded]="true"
+                              ></p-tag>
+                              <p-tag
+                                *ngIf="option.value === 3"
+                                icon="pi pi-times"
+                                severity="danger"
+                                value="{{ option.label }}"
+                                [rounded]="true"
+                              ></p-tag>
+                              <p-tag
+                                *ngIf="option.value === 4"
+                                icon="pi pi-check"
+                                severity="success"
+                                value="{{ option.label }}"
+                                [rounded]="true"
+                              ></p-tag>
+                              <p-tag
+                                *ngIf="option.value === 5"
+                                icon="pi pi-times"
+                                styleClass="expired"
+                                value="{{ option.label }}"
+                                [rounded]="true"
+                              ></p-tag>
+                              <p-tag
+                                *ngIf="option.value === 6"
+                                icon="pi pi-exclamation-triangle"
+                                severity="warning"
+                                value="{{ option.label }}"
+                                [rounded]="true"
+                              ></p-tag>
+                            </ng-template>
+                          </p-dropdown>
+                        </ng-template>
+                      </p-columnFilter>
+                    </div>
+                  </th>
+                  <th
+                    *ngSwitchDefault
+                    [ngStyle]="{ textAlign: col.headerAlign }"
+                  >
+                    {{ col.header }}
+                  </th>
+                </ng-container>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="colgroup" let-columns>
+              <colgroup>
+                <col
+                  *ngFor="let col of columns"
+                  [ngStyle]="{ width: col.width || 'auto' }"
+                />
+              </colgroup>
+            </ng-template>
+
+            <ng-template
+              pTemplate="body"
+              let-appointment
+              let-columns="columns"
+              let-expanded="expanded"
+              let-i="rowIndex"
+            >
+              <tr>
+                <td>
+                  <button
+                    type="button"
+                    pButton
+                    pRipple
+                    [pRowToggler]="appointment"
+                    class="p-button-text p-button-rounded p-button-plain"
+                    [icon]="
+                      expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'
+                    "
+                    pTooltip="Xem các mặt bằng của cuộc hẹn"
+                  ></button>
+                </td>
+                <ng-container
+                  *ngFor="let col of columns"
+                  [ngSwitch]="col.field"
+                >
+                  <td
+                    *ngSwitchCase="'onDateTime'"
+                    [ngStyle]="{ textAlign: col.textAlign }"
+                  >
+                    {{ appointment[col.field] | date : FULL_DATE_TIME_FORMAT }}
+                  </td>
+                  <td
+                    *ngSwitchCase="'brokerName'"
+                    [ngStyle]="{ textAlign: col.textAlign }"
+                  >
+                    <a
+                      href="javascript:void(0);"
+                      class="ml-2 pe-none"
+                      (click)="openBrokerDetail(appointment)"
+                    >
+                      {{ appointment.broker.name }}
+                    </a>
+                  </td>
+                  <td
+                    *ngSwitchDefault
+                    [attr.title]="
+                      col.preField
+                        ? appointment[col.preField][col.field]
+                        : appointment[col.field]
+                    "
+                    [ngStyle]="{ textAlign: col.textAlign }"
+                  >
+                    {{
+                      col.preField
+                        ? appointment[col.preField][col.field]
+                        : appointment[col.field]
+                    }}
+                  </td>
+                  <td
+                    *ngSwitchCase="'phoneNumber'"
+                    [ngStyle]="{ textAlign: col.textAlign }"
+                  >
+                    {{ appointment[col.preField][col.field] | slice : 0 : 4 }}
+                    {{ appointment[col.preField][col.field] | slice : 4 : 7 }}
+                    {{ appointment[col.preField][col.field] | slice : 7 : 10 }}
+                  </td>
+                  <td
+                    *ngSwitchCase="'status'"
+                    [ngStyle]="{ textAlign: col.textAlign }"
+                  >
+                    <p-tag
+                      *ngIf="appointment.status === 1"
+                      icon="pi pi-exclamation-triangle"
+                      severity="warning"
+                      value="{{ statuses[0].label }}"
+                      [rounded]="true"
+                    ></p-tag>
+                    <p-tag
+                      *ngIf="appointment.status === 2"
+                      icon="pi pi-info-circle"
+                      severity="info"
+                      value="{{ statuses[1].label }}"
+                      [rounded]="true"
+                    ></p-tag>
+                    <p-tag
+                      *ngIf="appointment.status === 3"
+                      icon="pi pi-times"
+                      severity="danger"
+                      value="{{ statuses[2].label }}"
+                      [rounded]="true"
+                    ></p-tag>
+                    <p-tag
+                      *ngIf="appointment.status === 4"
+                      icon="pi pi-check"
+                      severity="success"
+                      value="{{ statuses[3].label }}"
+                      [rounded]="true"
+                    ></p-tag>
+                    <p-tag
+                      *ngIf="appointment.status === 5"
+                      icon="pi pi-times"
+                      styleClass="expired"
+                      value="{{ statuses[4].label }}"
+                      [rounded]="true"
+                    ></p-tag>
+                    <p-tag
+                      *ngIf="appointment.status === 6"
+                      icon="pi pi-exclamation-triangle"
+                      severity="warning"
+                      value="{{ statuses[5].label }}"
+                      [rounded]="true"
+                    ></p-tag>
+                  </td>
+                  <td
+                    *ngSwitchCase="'action'"
+                    [ngStyle]="{ textAlign: col.textAlign }"
+                  >
+                    <button
+                      class="btn btn-info btn-round animation-on-hover btn-icon mx-2"
+                      (click)="openEditAppointment(appointment)"
+                      title="Chỉnh sửa"
+                      *ngIf="appointment.status === 1"
+                    >
+                      <i class="pi pi-pencil"> </i>
+                    </button>
+                    <button
+                    *ngIf="appointment.status === 1 || appointment.status === 2"
+                      class="btn btn-danger btn-round animation-on-hover btn-icon"
+                      (click)="deleteAppointment(appointment, i)"
+                    >
+                      <i class="pi pi-trash"> </i>
+                    </button>
+                  </td>
+                </ng-container>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+              <tr>
+                <td colspan="6" *ngIf="isShowSpin" class="text-center">
+                  <p-progressSpinner
+                    [style]="{ width: '50px', height: '50px' }"
+                    styleClass="custom-spinner"
+                    strokeWidth="8"
+                    fill="#EEEEEE"
+                    animationDuration=".5s"
+                  ></p-progressSpinner>
+                </td>
+                <td colspan="6" *ngIf="!isShowSpin" class="text-center">
+                  Không có cuộc hẹn.
+                </td>
+              </tr>
+            </ng-template>
+            <ng-template
+              pTemplate="rowexpansion"
+              let-appointment
+              let-i="rowIndex"
+            >
+              <tr>
+                <td colspan="6">
+                  <div class="properties-list">
+                    <app-property-list-table
+                      [property]="appointment.property"
+                      [isCanEdit]="false"
+                      (showedProperty)="routingDetailProperty($event)"
+                    ></app-property-list-table>
+                  </div>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<router-outlet></router-outlet>
+
+<ng-container *ngIf="isShowBroker">
+  <app-broker-detail
+    (statusBrokerDialog)="statusBrokerDialog()"
+    [appointment]="appointment"
+  ></app-broker-detail>
+</ng-container>
+
+
+<!-- unverifyModal -->
+<p-dialog
+  header="Lý do xoá bỏ cuộc hẹn"
+  [(visible)]="isShowCancelModal"
+  [modal]="true"
+  [style]="{ width: '35%', height: '38%' }"
+  [baseZIndex]="1100"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <div class="row p-10">
+    <div class="col-sm-12 col-xl-12 p-l-4">
+      <dl class="dl-horizontal row mt-2">
+        <dt class="col-sm-8 my-1">Lý do</dt>
+        <dd class="col-sm-12">
+          <form novalidate [formGroup]="cancelForm">
+            <p-dropdown
+              [options]="reasons"
+              appendTo="body"
+              [baseZIndex]="1000000"
+              editable="true"
+              [(ngModel)]="rejectMessage"
+              placeholder="Mô tả chi tiết lý do xoá bỏ"
+              appInputRestriction
+              formControlName="rejectMessage"
+              [class]="
+                displayMessage.rejectMessage ? 'ng-dirty ng-invalid' : ''
+              "
+            ></p-dropdown>
+            <p-message
+              severity="error"
+              *ngIf="displayMessage.rejectMessage"
+              text="{{ displayMessage.rejectMessage }}"
+            ></p-message>
+          </form>
+        </dd>
+      </dl>
+    </div>
+  </div>
+  <ng-template pTemplate="footer">
+    <dl class="dl-horizontal row mt-2">
+      <div class="col-md-6 text-center">
+        <p-button
+          label="Huỷ bỏ"
+          icon="pi pi-times"
+          (onClick)="hideCancelModal()"
+          class="mr-2"
+          styleClass="p-button-secondary"
+          [pTooltip]="'Huỷ bỏ nhập dữ liệu'"
+        ></p-button>
+      </div>
+      <div class="col-md-6 text-center">
+        <p-button
+          label="Xác nhận"
+          icon="pi pi-check"
+          type="submit"
+          [loading]="loading"
+          [disabled]="!cancelForm.valid"
+          (onClick)="deleteFromModal()"
+          class="custom-button"
+          [pTooltip]="
+          cancelForm.valid
+              ? 'Cập nhật dữ liệu bạn đã nhập'
+              : 'Chỉ có thể lưu khi biểu mẫu không có lỗi'
+          "
+        ></p-button>
+      </div>
+    </dl>
+  </ng-template>
+</p-dialog>

@@ -1,0 +1,303 @@
+<div class="wrapper">
+  <div class="container-fluid px-4 pt-3">
+    <div class="row">
+      <div class="col-lg-12 col-lg-12 mb-4">
+        <div class="row">
+          <div class="col-offset-2 col-lg-8">
+            <div class="card title p-3">
+              <h5>
+                <strong>DANH SÁCH YÊU CẦU TÌM KIẾM</strong>
+              </h5>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-12 mb-2">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-offset-2 col-8 px-0">
+              <div class="container">
+                <div class="row">
+                  <div
+                    class="col-12 d-flex align-items-start property"
+                    *ngIf="isShowSkeleton"
+                  >
+                    <div class="container">
+                      <div class="row">
+                        <div class="col">
+                          <p-skeleton
+                            styleClass="mb-2"
+                            borderRadius="16px"
+                          ></p-skeleton>
+                          <p-skeleton
+                            styleClass="mb-2"
+                            borderRadius="16px"
+                          ></p-skeleton>
+                          <p-skeleton
+                            styleClass="mb-2"
+                            borderRadius="16px"
+                          ></p-skeleton>
+                          <p-skeleton
+                            styleClass="mb-2"
+                            borderRadius="16px"
+                          ></p-skeleton>
+                          <p-skeleton
+                            styleClass="mb-2"
+                            borderRadius="16px"
+                          ></p-skeleton>
+                          <p-skeleton
+                            styleClass="mb-2"
+                            borderRadius="16px"
+                          ></p-skeleton>
+                          <p-skeleton
+                            height="4rem"
+                            borderRadius="16px"
+                          ></p-skeleton>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <ng-container *ngIf="!isShowSkeleton">
+                    <ng-container *ngIf="!isEmpty">
+                      <div
+                        class="col-12 px-0 d-flex align-items-stretch property"
+                        *ngFor="let request of requests"
+                      >
+                        <div class="card card-request">
+                          <div class="container">
+                            <div class="row">
+                              <div class="col-7">
+                                <div class="row">
+                                  <div
+                                    class="col-sm-5 flex align-items-center justify-content-center"
+                                  >
+                                    <div class="container">
+                                      <div class="row">
+                                        <div class="col-sm-12">
+                                          <p class="mb-0 text-muted">
+                                            Quận/huyện
+                                          </p>
+                                        </div>
+                                        <div class="col-sm-12 py-0">
+                                          <p class="mb-0">
+                                            {{
+                                              request.area
+                                                ? request.area
+                                                : "Không có thông tin"
+                                            }}
+                                          </p>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="col-sm-2">
+                                    <p-divider layout="vertical"></p-divider>
+                                  </div>
+                                  <div
+                                    class="col-sm-5 flex align-items-center justify-content-center"
+                                  >
+                                    <div class="container">
+                                      <div class="row">
+                                        <div class="col-sm-12">
+                                          <p class="text-muted mb-0">
+                                            Khoảng giá
+                                          </p>
+                                        </div>
+                                        <div class="col-sm-12 py-0">
+                                          <p class="mb-0">
+                                            {{
+                                              (request.minPrice / 1000000
+                                                | number : "1.0-2") +
+                                                " - " +
+                                                (request.maxPrice / 1000000
+                                                  | number : "1.0-2") +
+                                                " triệu/tháng"
+                                            }}
+                                          </p>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <p-divider></p-divider>
+                                <div class="row">
+                                  <div
+                                    class="col-sm-5 flex align-items-center justify-content-center"
+                                  >
+                                    <div class="container">
+                                      <div class="row">
+                                        <div class="col-sm-12">
+                                          <p class="text-muted mb-0">
+                                            Khoảng diện tích
+                                          </p>
+                                        </div>
+                                        <div class="col-sm-12 py-0">
+                                          <p class="mb-0">
+                                            {{
+                                              request.minFloorArea +
+                                                " - " +
+                                                request.maxFloorArea +
+                                                " m²"
+                                            }}
+                                          </p>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div
+                                    class="col-sm-2 flex align-items-center justify-content-center"
+                                  >
+                                    <p-divider layout="vertical"></p-divider>
+                                  </div>
+                                  <div
+                                    class="col-sm-5 flex align-items-center justify-content-center"
+                                  >
+                                    <div class="container">
+                                      <div class="row">
+                                        <div class="col-sm-12">
+                                          <p class="text-muted mb-0">
+                                            Số mặt tiền
+                                          </p>
+                                        </div>
+                                        <div class="col-sm-12 py-0">
+                                          {{
+                                            request.amountFrontage
+                                              ? request.amountFrontage
+                                              : "Không có thông tin"
+                                          }}
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <p-divider></p-divider>
+                                <div class="row">
+                                  <div
+                                    class="col-sm-12 flex align-items-center justify-content-center"
+                                  >
+                                    <div class="container">
+                                      <div class="row">
+                                        <div class="col-sm-12">
+                                          <p class="text-muted mb-0">Mô tả</p>
+                                        </div>
+                                        <div class="col-sm-12 py-0">
+                                          <dx-html-editor
+                                            valueType="html"
+                                            [value]="
+                                              request.description
+                                                ? request.description
+                                                : 'Không có mô tả'
+                                            "
+                                            [readOnly]="true"
+                                            class="custom-description"
+                                          >
+                                          </dx-html-editor>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-1">
+                                <p-divider layout="vertical"></p-divider>
+                              </div>
+                              <div class="col-4 px-0">
+                                <div class="col-12">
+                                  Trạng thái:
+                                  <div class="float-right">
+                                    <p-tag
+                                      *ngIf="request.status === 1"
+                                      styleClass="mr-2"
+                                      icon="pi pi-info-circle"
+                                      severity="info"
+                                      value="Chưa xử lý"
+                                    ></p-tag>
+                                    <p-tag
+                                      *ngIf="request.status === 2"
+                                      styleClass="mr-2"
+                                      icon="pi pi-check"
+                                      severity="success"
+                                      value="Đã xử lý"
+                                    ></p-tag>
+                                  </div>
+                                </div>
+                                <div
+                                  class="col-12 px-0 flex align-items-center py-3"
+                                >
+                                  <div class="container-fluid">
+                                    <div class="row">
+                                      <div
+                                        class="col-12 flex align-items-center"
+                                      >
+                                        Tần suất gửi kết quả tìm kiếm:
+                                      </div>
+                                      <div
+                                        class="col-12 flex justify-content-start"
+                                      >
+                                        <p-dropdown
+                                          emptyMessage="Danh sách trống"
+                                          [ngModel]="
+                                            request.selectedUpdateMethod
+                                          "
+                                          [options]="updateMethods"
+                                          placeholder="Tần suất cập nhật"
+                                          [showClear]="false"
+                                          [baseZIndex]="1101"
+                                          optionLabel="label"
+                                          (onChange)="
+                                            changeUpdateMethod($event, request)
+                                          "
+                                        >
+                                        </p-dropdown>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="container-fluid">
+                                  <div class="row">
+                                    <div class="col-10">
+                                      <button
+                                        class="btn btn-default btn-block"
+                                        (click)="
+                                          routingToSearchResults(request)
+                                        "
+                                        type="submit"
+                                      >
+                                        Đi đến tìm kiếm đã lưu
+                                      </button>
+                                    </div>
+                                    <div
+                                      class="col-2 px-0 flex align-items-center justify-content-end"
+                                    >
+                                      <button
+                                        class="btn btn-danger btn-round animation-on-hover btn-icon"
+                                        (click)="deleteSavedSearch(request)"
+                                        pTooltip="Xoá"
+                                      >
+                                        <i class="pi pi-times"> </i>
+                                      </button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </ng-container>
+                    <ng-container *ngIf="isEmpty">
+                      <div class="d-flex justify-content-center w-100">
+                        Bạn không có tìm kiếm đã lưu.
+                      </div>
+                    </ng-container>
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+            <div class="col-2"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,246 @@
+<div class="wrapper">
+  <div class="container-fluid page-header">
+      <div
+        class="page-header-image"
+        style="background-image: url('assets/img/ill/authen-bg.svg')"
+      ></div>
+      <div class="page-header-image-top"></div>
+      <div id="particles-js"></div>
+      <div class="count-particles">
+        <span class="js-count-particles"></span>
+      </div>
+        <div class="container main-container">
+          <div class="row">
+            <div class="col-lg-6 col-sm-12 px-4 mt-6">
+              <h1 class="display-3-light">
+                Tìm mặt bằng thương mại tiếp theo của bạn
+              </h1>
+              <p class="lead pb-4">
+                Tìm kiếm mặt bằng thương mại để cho thuê và bán trên khắp thành
+                phố Hồ Chí Minh. Tìm kiếm văn phòng, cửa hàng bán lẻ.
+              </p>
+              <div class="row row-input">
+                <div class="col-sm-6 col-12">
+                  <button
+                    class="btn btn-default btn-block"
+                    (click)="submitButton()"
+                    type="submit"
+                  >
+                    Trải nghiệm
+                    <i class="fa-regular fa-arrow-alt-circle-right"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 col-sm-12 p-0">
+              <figure class="mx-auto my-auto">
+                <lottie-player
+                  src="../../../assets/img/landing-page/main-lp.json"
+                  background="transparent"
+                  speed="0.5"
+                  class="main-image"
+                  loop
+                  autoplay
+                ></lottie-player>
+              </figure>
+            </div>
+          </div>
+        </div>
+  </div>
+
+  <div class="section features-7 bg-secondary">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-10 text-center mx-auto">
+          <h4 class="display-4">Chuyên cung cấp thông tin Bất Động Sản Thương Mại cho thuê</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="section features-1">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 mx-auto text-center">
+          <span class="badge badge-primary badge-pill mb-3">LÝ DO CHỌN</span>
+          <h5 class="display-4">CREL khi tìm thuê Bất Động Sản Thương Mại</h5>
+          <!-- <p class="lead">
+            The time is now for it to be okay to be great. For being a bright
+            color. For standing out.
+          </p> -->
+        </div>
+      </div>
+      <div class="row">
+        
+        <div class="col-md-4">
+          <div class="info">
+            <div
+              class="icon icon-lg icon-shape icon-shape-success shadow rounded-circle"
+            >
+              <i class="ni ni-world"></i>
+            </div>
+            <h6 class="info-title text-uppercase text-success">
+              BĐS TM cho thuê đa dạng
+            </h6>
+            <p class="description opacity-8">
+              Đa dạng diện tích để kinh doanh, phục vụ cho nhiều loại hình kinh doanh với đa dạng mức giá.
+            </p>
+            <a class="text-primary-color" href="javascript:;" (click)="routingProperties()">
+              Trải nghiệm
+              <i class="ni ni-bold-right text-primary-color"></i>
+            </a>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="info">
+            <div
+              class="icon icon-lg icon-shape icon-shape-primary shadow rounded-circle"
+            >
+              <i class="ni ni-atom"></i>
+            </div>
+            <h6 class="info-title text-uppercase text-primary-color">
+              Hỗ trợ tốt nhất
+            </h6>
+            <p class="description opacity-8" >
+              Luôn hỗ trợ khách hàng trước & sau khi thuê, đặt sự ưu tiên của thương hiệu đi thuê lên hàng đầu.
+            </p>
+            <a class="text-primary-color" href="javascript:;" (click)="routingRequest()">
+              Trải nghiệm
+              <i class="ni ni-bold-right text-primary-color"></i>
+            </a>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="info">
+            <div
+              class="icon icon-lg icon-shape icon-shape-warning shadow rounded-circle"
+            >
+              <i class="ni ni-settings-gear-65"></i>
+            </div>
+            <h6 class="info-title text-uppercase text-warning">
+              Hỗ trợ pháp lý đầy đủ
+            </h6>
+            <p class="description opacity-8">
+              Quy trình tìm thuê rõ ràng, theo dõi thông tin hợp đồng thuê, đảm bảo trọn vẹn trải nghiệm thuê.
+            </p>
+            <a class="text-primary-color" href="javascript:;" (click)="routingContract()">
+              Trải nghiệm
+              <i class="ni ni-bold-right text-primary-color"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="cd-section" id="accordion">
+    <div class="accordion-1">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 mx-auto text-center">
+            <h2 class="title mb-3 mt-5 display-4">
+              Câu hỏi thường gặp về bất động sản thương mại trên CREL
+            </h2>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 ml-auto">
+            <div class="accordion" id="accordionExample">
+              <div class="card">
+                <div class="card-header" id="headingOne">
+                  <h5 class="mb-0">
+                    <button
+                      aria-controls="collapseOne"
+                      class="btn btn-link w-100 text-primary-color text-left"
+                      [attr.aria-expanded]="!isCollapsed"
+                      (click)="isCollapsed = !isCollapsed"
+                      id="collapseOne"
+                      type="button"
+                    >
+                      Bất động sản thương mại là gì?
+                      <i class="ni ni-bold-down float-right pt-1"></i>
+                    </button>
+                  </h5>
+                </div>
+                <div
+                  aria-labelledby="headingOne"
+                  class="show"
+                  data-parent="#accordionExample"
+                  [isAnimated]="true"
+                  [collapse]="isCollapsed"
+                  id="collapseOne"
+                >
+                  <div class="card-body opacity-8">
+                    Bất động sản thương mại là loại hình bất động sản thương mại được sử
+                    dụng với mục đích thương mại / kinh doanh. Bất động sản thương mại
+                    thương mại thường đề cập đến bất động sản thương mại là nơi ở của các
+                    doanh nghiệp. Nó cũng có thể đề cập đến đất được sử dụng để
+                    tạo ra lợi nhuận và bất động sản thương mại cho thuê nhà ở lớn.
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header" id="headingTwo">
+                    <h5 class="mb-0">
+                      <button
+                        aria-controls="collapseTwo"
+                        class="btn btn-link w-100 text-primary-color text-left collapsed"
+                        [attr.aria-expanded]="!isCollapsed1"
+                        (click)="isCollapsed1 = !isCollapsed1"
+                        id="collapseTwo"
+                        type="button"
+                      >
+                        Các loại bất động sản thương mại chính là gì?
+                        <i class="ni ni-bold-down float-right pt-1"></i>
+                      </button>
+                    </h5>
+                  </div>
+                  <div
+                    aria-labelledby="headingTwo"
+                    data-parent="#accordionExample"
+                    [isAnimated]="true"
+                    [collapse]="isCollapsed1"
+                    id="collapseTwo"
+                  >
+                    <div class="card-body opacity-8">
+                      Có 6 loại bất động sản thương mại chính: văn phòng, bán
+                      lẻ, công nghiệp, giải trí, chăm sóc sức khỏe và phòng
+                      trưng bày. Mỗi loại có một hạng tài sản thương mại được
+                      chỉ định.
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header" id="headingThree">
+                    <h5 class="mb-0">
+                      <button
+                        aria-controls="collapseThree"
+                        class="btn btn-link w-100 text-primary-color text-left collapsed"
+                        [attr.aria-expanded]="!isCollapsed2"
+                        (click)="isCollapsed2 = !isCollapsed2"
+                        id="collapseThree"
+                        type="button"
+                      >
+                        CREL liệt kê bao nhiêu bất động sản thương mại?
+                        <i class="ni ni-bold-down float-right pt-1"></i>
+                      </button>
+                    </h5>
+                  </div>
+                  <div
+                    aria-labelledby="headingThree"
+                    data-parent="#accordionExample"
+                    [isAnimated]="true"
+                    [collapse]="isCollapsed2"
+                    id="collapseThree"
+                  >
+                    <div class="card-body opacity-8">
+                      Chúng tôi vẫn đang tiếp tục cập nhật.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<p-scrollTop behavior="smooth"></p-scrollTop>

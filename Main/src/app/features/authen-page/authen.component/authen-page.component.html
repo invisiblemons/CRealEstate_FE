@@ -1,0 +1,297 @@
+<div class="wrapper">
+  <div class="page-header">
+    <div
+      class="page-header-image"
+      style="background-image: url('../../../../assets/img/ill/authen-bg.svg')"
+    ></div>
+    <div class="container" id="container">
+      <div class="form-container sign-up-container">
+        <form
+          action="javascript:;"
+          (ngSubmit)="openCreateAccount()"
+          [formGroup]="signUpForm"
+        >
+          <h2 class="display-4">Tạo tài khoản</h2>
+          <div class="social-container">
+            <div class="google-btn" style="cursor: pointer" (click)="loginGG()">
+              <div class="google-icon-wrapper">
+                <img
+                  class="google-icon"
+                  src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
+                />
+              </div>
+              <p class="btn-text">
+                <b>
+                  <ng-container *ngIf="signUpLoading">
+                    <i class="pi pi-spin pi-spinner"></i>
+                  </ng-container>
+                  <ng-container *ngIf="!signUpLoading">
+                    Đăng ký với Google
+                  </ng-container>
+                </b>
+              </p>
+            </div>
+          </div>
+          <span class="text-default mb-4">
+            hoặc sử dụng tài khoản của bạn
+          </span>
+          <div class="form-group mb-5">
+            <div class="p-inputgroup">
+              <span class="p-inputgroup-addon">
+                <i class="pi pi-user"></i>
+              </span>
+              <span class="p-float-label">
+                <input
+                  (change)="onChangeUserName()"
+                  id="userNameGroup"
+                  type="text"
+                  pInputText
+                  [(ngModel)]="userNameSignUp"
+                  (keydown.space)="$event.preventDefault()"
+                  appInputRestriction
+                  formControlName="userNameSignUp"
+                  [class]="
+                    displayMessage.userNameSignUp
+                      ? 'ng-dirty ng-invalid custom-input'
+                      : 'custom-input'
+                  "
+                  [pTooltip]="
+                    displayMessage.userNameSignUp
+                      ? displayMessage.userNameSignUp
+                      : ''
+                  "
+                />
+                <label for="userNameGroup">Tài khoản</label>
+              </span>
+            </div>
+          </div>
+          <div class="form-group mb-5">
+            <div class="p-inputgroup">
+              <span class="p-inputgroup-addon">
+                <i class="pi pi-key"></i>
+              </span>
+              <span class="p-float-label">
+                <p-password
+                  id="passwordGroup"
+                  promptLabel="Nhập mật khẩu"
+                  weakLabel="Yếu"
+                  mediumLabel="Trung bình"
+                  strongLabel="Mạnh"
+                  [(ngModel)]="passwordSignUp"
+                  inputId="password"
+                  appendTo="body"
+                  appInputRestriction
+                  formControlName="passwordSignUp"
+                  styleClass="custom-input"
+                  [class]="
+                    displayMessage.passwordSignUp ? 'ng-dirty ng-invalid' : ''
+                  "
+                  [pTooltip]="
+                    displayMessage.passwordSignUp
+                      ? displayMessage.passwordSignUp
+                      : ''
+                  "
+                >
+                  <ng-template pTemplate="header">
+                    <h6>Chọn một mật khẩu</h6>
+                  </ng-template>
+                  <ng-template pTemplate="footer">
+                    <p-divider></p-divider>
+                    <p class="mt-2">Đề xuất</p>
+                    <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
+                      <li>Có ít nhất 1 kí tự thường</li>
+                      <li>Có ít nhất 1 kí tự hoa</li>
+                      <li>Có ít nhất 1 kí tự số</li>
+                      <li>Tối thiểu có 8 kí tự</li>
+                      <li>Tối thiểu 1 kí tự đặc biệt</li>
+                    </ul>
+                  </ng-template>
+                </p-password>
+                <label for="passwordGroup">Mật khẩu</label>
+              </span>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="p-inputgroup">
+              <span class="p-inputgroup-addon">
+                <i class="pi pi-replay"></i>
+              </span>
+              <span class="p-float-label">
+                <p-password
+                  id="passwordCheckingGroup"
+                  [(ngModel)]="confirmedPassword"
+                  [feedback]="false"
+                  appInputRestriction
+                  formControlName="confirmedPassword"
+                  styleClass="custom-input"
+                  [class]="
+                    displayMessage.confirmedPassword
+                      ? 'ng-dirty ng-invalid'
+                      : ''
+                  "
+                  [pTooltip]="
+                    displayMessage.confirmedPassword
+                      ? displayMessage.confirmedPassword
+                      : ''
+                  "
+                ></p-password>
+                <label for="passwordCheckingGroup">Nhập lại mật khẩu</label>
+              </span>
+            </div>
+          </div>
+          <button
+            class="btn btn-primary"
+            type="submit"
+            [title]="
+              signUpForm.valid
+                ? 'Nhấn để tạo tài khoản'
+                : 'Chỉ có thể tạo tài khoản khi dữ liệu nhập vào không bị lỗi'
+            "
+            [disabled]="!signUpForm.valid"
+            (click)="openCreateAccount()"
+          >
+            Đăng ký
+          </button>
+        </form>
+      </div>
+      <div class="form-container sign-in-container">
+        <form
+          action="javascript:;"
+          (ngSubmit)="loginUser()"
+          [formGroup]="loginForm"
+        >
+          <h2 class="display-4">Đăng nhập</h2>
+          <div class="social-container">
+            <div class="google-btn" style="cursor: pointer" (click)="loginGG()">
+              <div class="google-icon-wrapper">
+                <img
+                  class="google-icon"
+                  src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
+                />
+              </div>
+              <p class="btn-text">
+                <b>
+                  <ng-container *ngIf="loginLoading">
+                    <i class="pi pi-spin pi-spinner"></i>
+                  </ng-container>
+                  <ng-container *ngIf="!loginLoading">
+                    Đăng nhập với Google
+                  </ng-container>
+                </b>
+              </p>
+            </div>
+          </div>
+          <span class="text-default mb-4">
+            hoặc sử dụng tài khoản của bạn
+          </span>
+          <div class="form-group mb-5">
+            <div class="p-inputgroup">
+              <span class="p-inputgroup-addon">
+                <i class="pi pi-user"></i>
+              </span>
+              <span class="p-float-label">
+                <input
+                  id="userNameGroup"
+                  type="text"
+                  pInputText
+                  (keydown.space)="$event.preventDefault()"
+                  [(ngModel)]="userNameLogin"
+                  appInputRestriction
+                  formControlName="userNameLogin"
+                  [class]="
+                    displayMessage.userNameLogin
+                      ? 'ng-dirty ng-invalid custom-input'
+                      : 'custom-input'
+                  "
+                  [pTooltip]="
+                    displayMessage.userNameLogin
+                      ? displayMessage.userNameLogin
+                      : ''
+                  "
+                />
+                <label for="userNameGroup">Tài khoản</label>
+              </span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="p-inputgroup">
+              <span class="p-inputgroup-addon">
+                <i class="pi pi-key"></i>
+              </span>
+              <span class="p-float-label">
+                <p-password
+                  id="passwordGroup"
+                  [(ngModel)]="passwordLogin"
+                  [feedback]="false"
+                  appInputRestriction
+                  formControlName="passwordLogin"
+                  styleClass="custom-input"
+                  [class]="
+                    displayMessage.passwordLogin ? 'ng-dirty ng-invalid' : ''
+                  "
+                  [pTooltip]="
+                    displayMessage.passwordLogin
+                      ? displayMessage.passwordLogin
+                      : ''
+                  "
+                ></p-password>
+                <label for="passwordGroup">Mật khẩu</label>
+              </span>
+            </div>
+          </div>
+          <a [routerLink]="'/xac-thuc/quen-mat-khau'"> Quên mật khẩu? </a>
+          <button
+            class="btn btn-primary mt-3"
+            type="submit"
+            (click)="loginUser()"
+            [disabled]="!loginForm.valid"
+          >
+            Đăng nhập
+          </button>
+        </form>
+      </div>
+      <div class="overlay-container">
+        <div class="overlay">
+          <div class="overlay-panel overlay-left">
+            <!-- <a class="navbar-brand mr-lg-5" [routerLink]="['/landing-page']">
+              <img src="assets/img/brand/crel-full-white.png" id="brand-logo"/>
+            </a> -->
+            <h1 class="text-white">Chào mừng trở lại!</h1>
+            <p>Để tiếp tục sử dụng, vui lòng đăng nhập vào ứng dụng</p>
+            <button class="btn btn-neutral btn-sm" id="signIn">
+              Đăng nhập
+            </button>
+          </div>
+          <div class="overlay-panel overlay-right">
+            <!-- <a class="navbar-brand mr-lg-5" [routerLink]="['/landing-page']">
+              <img src="assets/img/brand/crel-full-white.png" id="brand-logo" />
+            </a> -->
+            <h1 class="text-white">Xin chào, bạn của tôi!</h1>
+            <p>Để bắt đầu, hãy nhập thông tin của bạn để đăng ký nhé!</p>
+            <button class="btn btn-neutral btn-sm" id="signUp">Đăng ký</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 
+modal update account after create new account
+ -->
+  <ng-container *ngIf="isShowGoogle">
+    <app-create-by-google
+      [brand]="brand"
+      (stateCreateForm)="getStateCreateForm()"
+    ></app-create-by-google>
+  </ng-container>
+
+  <!-- 
+modal update account after create new account
+ -->
+  <ng-container *ngIf="isShowUserPass">
+    <app-create-by-userpass
+      [brand]="brand"
+      (stateCreateWithUsernameForm)="getStateCreateWithUsernameForm()"
+    ></app-create-by-userpass>
+  </ng-container>
+</div>

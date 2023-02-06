@@ -1,0 +1,162 @@
+<p-dialog
+  [(visible)]="isShowDialog"
+  [style]="{ width: '30rem' }"
+  header="Chỉnh sửa thông tin cuộc hẹn"
+  [modal]="true"
+  styleClass="p-fluid"
+  (onHide)="hideDialog()"
+  [dismissableMask]="false"
+  [closable]="false"
+  [draggable]="false"
+>
+  <ng-template pTemplate="content">
+    <div class="grid" *ngIf="isShowSkeleton">
+      <div class="sm:col-12 md:col-6">
+        <p-skeleton height="2rem" styleClass="mb-2"></p-skeleton>
+      </div>
+      <div class="sm:col-12 md:col-6">
+        <p-skeleton height="2rem" styleClass="mb-2"></p-skeleton>
+      </div>
+      <div class="sm:col-12 md:col-6">
+        <p-skeleton height="2rem" styleClass="mb-2"></p-skeleton>
+      </div>
+      <div class="sm:col-12 md:col-6">
+        <p-skeleton height="2rem" styleClass="mb-2"></p-skeleton>
+      </div>
+      <div class="sm:col-12 md:col-6">
+        <p-skeleton height="2rem" styleClass="mb-2"></p-skeleton>
+      </div>
+      <div class="sm:col-12">
+        <p-skeleton height="4rem" styleClass="mb-2"></p-skeleton>
+      </div>
+    </div>
+
+    <form
+      novalidate
+      (ngSubmit)="saveAppointment()"
+      [formGroup]="appointmentForm"
+    >
+      <div class="grid p-3" *ngIf="!isShowSkeleton">
+        <div class="sm:col-12">
+          <label for="id">Mã</label>
+          <input
+            pInputText
+            id="id"
+            [value]="appointment.id"
+            appInputRestriction
+            formControlName="id"
+          />
+        </div>
+        <div class="sm:col-12">
+          <div class="mb-0 mt-3" *ngFor="let item of timeOptions; index as i">
+            <div
+              class="flex align-items-center"
+              *ngIf="timeOptions.length === 1"
+            >
+              Thời điểm
+            </div>
+            <div class="container">
+              <div class="row">
+                <div class="col-7 px-0 flex align-items-center">
+                  <div class="p-inputgroup">
+                    <span class="p-inputgroup-addon"
+                      ><i class="pi pi-calendar-plus"></i
+                    ></span>
+
+                    <p-calendar
+                      showButtonBar="true"
+                      placeholder="Chọn ngày"
+                      dateFormat="dd-mm-yy"
+                      (onSelect)="onSelectDate($event, i)"
+                      appInputRestriction
+                      formControlName="onDate"
+                      appendTo="body"
+                      [minDate]="minDate"
+                      [baseZIndex]="1100"
+                      [class]="
+                        displayMessage.onDate
+                          ? 'ng-dirty ng-invalid w-100'
+                          : ' w-100'
+                      "
+                    ></p-calendar>
+                  </div>
+                </div>
+                <div class="col-5 px-0 flex align-items-center">
+                  <p-dropdown
+                    [options]="times"
+                    placeholder="Chọn giờ"
+                    (onChange)="onSelectTime($event)"
+                    optionDisabled="inactive"
+                    appendTo="body"
+                    optionLabel="label"
+                    appInputRestriction
+                    formControlName="onTime"
+                    [class]="
+                      displayMessage.onTime
+                        ? 'ng-dirty ng-invalid w-100'
+                        : ' w-100'
+                    "
+                  ></p-dropdown>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="container">
+          <div class="row">
+            <div class="col-12" *ngIf="displayMessage.onDate">
+              <p-message
+                severity="error"
+                text="{{ displayMessage.onDate }}"
+              ></p-message>
+            </div>
+            <div class="col-12" *ngIf="displayMessage.onTime">
+              <p-message
+                severity="error"
+                text="{{ displayMessage.onTime }}"
+              ></p-message>
+            </div>
+          </div>
+        </div>
+        <div class="sm:col-12">
+          <label for="description">Lời nhắn</label>
+          <textarea
+            styleClass="description"
+            pInputTextarea
+            [(ngModel)]="appointment.description"
+            autoResize="autoResize"
+            appInputRestriction
+            formControlName="description"
+          ></textarea>
+        </div>
+      </div>
+    </form>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button
+      pButton
+      pRipple
+      label="Huỷ bỏ"
+      icon="pi pi-times"
+      class="p-button-text"
+      title="Huỷ bỏ nhập dữ liệu"
+      (click)="hideDialog()"
+    ></button>
+    <button
+      pButton
+      pRipple
+      label="Lưu"
+      icon="pi pi-check"
+      class="p-button-text"
+      (click)="saveAppointment()"
+      [loading]="loading"
+      [title]="
+        appointmentForm.valid
+          ? 'Lưu dữ liệu bạn đã nhập'
+          : 'Chỉ có thể lưu khi biểu mẫu không có lỗi'
+      "
+      [disabled]="!appointmentForm.valid"
+    ></button>
+  </ng-template>
+</p-dialog>

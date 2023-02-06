@@ -1,0 +1,164 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 list">
+      <div class="row">
+        <div class="col-6 pl-3 pt-3 align-items-center flex">
+          <strong
+            >Kết quả tìm kiếm ({{ properties ? properties.length : "" }} kết
+            quả)</strong
+          >
+        </div>
+        <div
+          class="col-6 pr-3 pt-3 align-items-center flex justify-content-end"
+        >
+          <p-dropdown
+            emptyMessage="Danh sách trống"
+            [options]="filterOptions"
+            [(ngModel)]="selectedFilter"
+            (onChange)="getPropertiesBySort()"
+            [showClear]="false"
+            optionLabel="name"
+          ></p-dropdown>
+        </div>
+      </div>
+      <div class="row property-list">
+        <div class="col text-center" *ngIf="loading">
+          <p-progressSpinner
+            [style]="{ width: '50px', height: '50px' }"
+            styleClass="custom-spinner"
+            strokeWidth="8"
+            fill="#EEEEEE"
+            animationDuration=".5s"
+          ></p-progressSpinner>
+        </div>
+        <ng-container *ngIf="!loading">
+          <ng-container *ngIf="isEmpty">
+            <div class="col-12 flex justify-content-center align-items-center">
+              <img
+                src="assets/img/Search-rafiki.svg"
+                style="width: 20rem"
+                alt="Không có mặt bằng phù hợp"
+              />
+              
+            </div>
+            <div class="col-12 flex justify-content-center align-items-center">
+              <p class="text-center text-muted">
+                Không tìm được mặt bằng phù hợp
+              </p>
+              
+            </div>
+          </ng-container>
+          <ng-container *ngIf="!isEmpty">
+            <div
+              class="col-md-12 col-lg-6 d-flex align-items-stretch property"
+              *ngFor="let property of properties"
+            >
+              <div class="card card-product">
+                <div class="style-property">
+                  <div
+                    class="card-status"
+                    *ngIf="
+                      property.type === 3 ||
+                      property.type === 1 ||
+                      property.lastUpdateDate > minDate
+                    "
+                  >
+                    <div class="front front--positive">
+                      {{
+                        property.type === 3
+                          ? "Đề xuất"
+                          : property.type === 1
+                          ? "Đề xuất"
+                          : property.lastUpdateDate > minDate
+                          ? "Mới"
+                          : ""
+                      }}
+                    </div>
+                  </div>
+                  <div
+                    class="card-image"
+                    (click)="viewPropertyDetail(property)"
+                    (mouseover)="showSpecific($event, property)"
+                  >
+                    <a>
+                      <div class="style-property-photo">
+                        <ng-container
+                          *ngIf="property.mainImage != null; else other"
+                        >
+                          <img
+                            alt="Ảnh mặt bằng"
+                            src="{{ property.mainImage.link }}"
+                          />
+                        </ng-container>
+                        <ng-template #other>
+                          <img
+                            alt="Ảnh mặt bằng"
+                            src="assets/img/bg-placeholder.png"
+                          />
+                        </ng-template>
+                      </div>
+                    </a>
+                  </div>
+                  <div class="card-body d-flex flex-column">
+                    <div class="row">
+                      <div
+                        class="col-10 pl-3"
+                        (click)="viewPropertyDetail(property)"
+                        (mouseover)="showSpecific($event, property)"
+                      >
+                        <h4 class="card-title">
+                          {{ property.price / 1000000 | number : "1.0-2" }}
+                          triệu/tháng
+                        </h4>
+                      </div>
+                      <div class="col-2" *ngIf="brand && brand.status === 2">
+                        <button
+                          *ngIf="!property.isActiveHeart"
+                          pButton
+                          pRipple
+                          type="button"
+                          icon="pi pi-heart"
+                          class="p-button-rounded p-button-outlined"
+                          (click)="addWishList(property)"
+                          pTooltip="Lưu vào danh sách yêu thích"
+                        ></button>
+                        <button
+                          *ngIf="property.isActiveHeart"
+                          pButton
+                          pRipple
+                          type="button"
+                          icon="pi pi-heart-fill"
+                          class="p-button-rounded p-button-outlined"
+                          (click)="removeWishList(property)"
+                          pTooltip="Loại khỏi danh sách yêu thích"
+                        ></button>
+                      </div>
+                    </div>
+                    <div
+                      class="address-container"
+                      (click)="viewPropertyDetail(property)"
+                      (mouseover)="showSpecific($event, property)"
+                    >
+                      <figcaption class="blockquote-footer">
+                        {{ property.location.addressName }}
+                      </figcaption>
+                    </div>
+                    <div
+                      class="card-footer mt-auto"
+                      (click)="viewPropertyDetail(property)"
+                      (mouseover)="showSpecific($event, property)"
+                    >
+                      <span class="date">
+                        {{ property.createDate | date : DATE_FORMAT }}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>

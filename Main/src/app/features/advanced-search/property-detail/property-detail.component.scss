@@ -1,0 +1,185 @@
+:host ::ng-deep .over-screen {
+  width: 72rem;
+  min-height: 100vh;
+  margin: 0 !important;
+}
+.skeleton {
+  height: 100vh !important;
+}
+.wrapper {
+  .image {
+    width: 100%;
+  }
+}
+:host ::ng-deep {
+  .p-image-preview-container > img {
+    width: 100%;
+  }
+  .p-image-preview {
+    max-height: 80vh;
+  }
+  .p-dialog-content {
+    overflow-y: auto;
+    min-height: 100vh;
+    padding: 0 !important;
+  }
+
+  .p-tabmenu-nav a {
+    padding: 0.3rem !important;
+    justify-content: center;
+    width: 9rem;
+  }
+  .p-tabmenu .p-tabmenu-nav {
+    height: 2.8rem;
+  }
+  .p-button.p-button-text {
+    color: #0857a0;
+  }
+  .p-fieldset.p-fieldset-toggleable .p-fieldset-legend {
+    width: 12rem;
+    font-size: 1rem;
+    margin-left: 0.5rem;
+    a {
+      justify-content: start;
+      padding: 1rem 0.25rem 1rem 0.7rem;
+    }
+  }
+}
+
+.dialog {
+  position: absolute;
+  flex-direction: row;
+  width: 100%;
+  display: flex;
+  min-height: 91%;
+
+  .left-dialog {
+    flex: 1 1 0%;
+    overflow-y: scroll;
+    height: 91vh;
+  }
+  .right-dialog {
+    flex-basis: auto;
+    display: flex;
+    flex-direction: column;
+    width: 63vh;
+    height: 93vh;
+    .header {
+      width: 100%;
+      display: flex;
+      flex-direction: row-reverse;
+    }
+    .main {
+      .info-main {
+        padding: 8px 16px 0px;
+        margin-bottom: 8px;
+      }
+      .bottom-main {
+        margin: 8px 16px 12px;
+        display: grid;
+        gap: 8px;
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    .body {
+      position: relative;
+      overflow-y: scroll;
+      height: 100%;
+      display: block;
+    }
+    .content {
+      position: relative;
+      background: white;
+      border-top: 1px solid rgb(209, 209, 213);
+      border-bottom: 1px solid rgb(209, 209, 213);
+      nav {
+        overflow: auto hidden;
+        display: flex;
+        &::-webkit-scrollbar {
+          display: none;
+        }
+        ul {
+          padding: 0 1rem !important;
+          display: flex;
+          margin-bottom: 0 !important;
+          li {
+            flex-shrink: 0;
+            list-style: none;
+            display: block;
+            flex-shrink: 0;
+            padding: 16px 8px;
+            color: rgb(42, 42, 51);
+            background: 0 0;
+            cursor: pointer;
+            &.active {
+              color: #2576bb;
+              border-bottom: 3px solid #2576bb;
+              font-weight: 700;
+            }
+          }
+        }
+      }
+    }
+    .content-body {
+      position: relative;
+      overflow-y: scroll;
+      height: 100%;
+      div {
+        padding: 0 0.5rem;
+      }
+    }
+  }
+}
+
+//nav menu scrollable
+.navbar-nav li {
+  display: inline-block;
+}
+.scroll {
+  white-space: nowrap;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+//button request cart + appointment
+::ng-deep .btn-default {
+  padding: 0.625rem 1.25rem;
+}
+::ng-deep .btn-danger {
+  padding: 0.625rem 1.25rem;
+}
+.active a .nav-link-inner--text {
+  border-bottom: solid 3px #2576bb;
+  color: #2576bb;
+}
+.btn-default {
+  background-color: white;
+  color: #0857a0;
+  border-color: #0857a0;
+  box-shadow: 0 3px 1px -2px rgb(0 0 0 / 20%), 0 2px 2px 0 rgb(0 0 0 / 14%),
+    0 1px 5px 0 rgb(0 0 0 / 12%);
+  &:hover {
+    background-color: #074783;
+    color: white;
+    transform: none;
+  }
+}
+
+.btn-outline-default {
+  color: #0857a0;
+  &:hover {
+    color: white;
+    transform: none;
+  }
+}
+
+::ng-deep {
+  .custom-description {
+    border: none;
+    border-style: unset !important;
+  }
+  .dx-htmleditor-content {
+    padding: 5px;
+  }
+}
+

@@ -1,0 +1,99 @@
+<div id="map" hidden></div>
+<p-toolbar styleClass="mb-2">
+  <div class="container">
+    <div class="row">
+      <div class="col-10">
+        <span class="p-input-icon-left">
+          <i class="pi pi-search"></i>
+          <input
+            pInputText
+            type="text"
+            (input)="datatable.filterGlobal($event.target.value, 'contains')"
+            placeholder="Tìm kiếm "
+            pTooltip="Tìm kiếm cửa hàng"
+          />
+        </span>
+      </div>
+      <div class="col-2">
+        <button
+          class="btn btn-primary animation-on-hover mr-2"
+          (click)="openNewStore()"
+          pTooltip="Thêm mới cửa hàng"
+        >
+          <i class="pi pi-plus"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</p-toolbar>
+
+<p-table
+  #datatable
+  responsiveLayout="stack"
+  [value]="stores"
+  selectionMode="single"
+  (onRowSelect)="onRowSelect($event)"
+  (onRowUnselect)="onRowUnselect($event)"
+  [(selection)]="selectedStore"
+  dataKey="id"
+  [globalFilterFields]="['name', 'address']"
+  [columns]="selectedColumns"
+>
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <ng-container *ngFor="let col of columns" [ngSwitch]="col.field">
+        <th *ngSwitchDefault [ngStyle]="{ textAlign: col.headerAlign }">
+          {{ col.header }}
+        </th>
+      </ng-container>
+    </tr>
+  </ng-template>
+  <ng-template
+    pTemplate="body"
+    let-store
+    let-columns="columns"
+    let-i="rowIndex"
+  >
+    <tr [pSelectableRow]="store">
+      <ng-container *ngFor="let col of columns" [ngSwitch]="col.field">
+        <td
+          *ngSwitchDefault
+          [pTooltip]="'Chọn để tìm mặt bằng thay thế phù hợp.'"
+          [ngStyle]="{ textAlign: col.textAlign }"
+        >
+          <span class="p-column-title">{{ col.header }}</span>
+          {{ store[col.field] }}
+        </td>
+        <td *ngSwitchCase="'action'" [ngStyle]="{ textAlign: col.textAlign }">
+          <button
+            class="btn btn-danger btn-round animation-on-hover btn-icon"
+            (click)="deleteStore(store)"
+            pTooltip="Xoá"
+          >
+            <i class="pi pi-trash"> </i>
+          </button>
+        </td>
+      </ng-container>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td colspan="3" *ngIf="isShowSpin" class="text-center">
+        <p-progressSpinner
+          [style]="{ width: '50px', height: '50px' }"
+          styleClass="custom-spinner"
+          strokeWidth="8"
+          fill="#EEEEEE"
+          animationDuration=".5s"
+        ></p-progressSpinner>
+      </td>
+      <td colspan="3" *ngIf="!isShowSpin" class="text-center">
+        Không có cửa hàng.
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<ng-container *ngIf="isShowNewDialog">
+  <app-store-new (stateNewDialog)="getStateNewDialog($event)"></app-store-new>
+</ng-container>

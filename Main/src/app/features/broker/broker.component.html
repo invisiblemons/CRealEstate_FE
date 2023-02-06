@@ -1,0 +1,38 @@
+<div class="d-flex align-items-center broker" (click)="redirectoDetail()">
+  <div class="image">
+    <img
+      [src]="broker ? broker.avatarLink : 'assets/img/defaultAvatar.png'"
+      class="rounded"
+      width="155"
+    />
+  </div>
+
+  <div class="ml-3 w-100">
+    <h4 class="mb-0 mt-0">{{ broker ? broker.name : "" }}</h4>
+    <span>Nhân viên môi giới</span>
+
+    <div
+      class="p-2 mt-2 bg-primary d-flex justify-content-between rounded text-white stats"
+    >
+      <div class="d-flex flex-column">
+        <span class="articles">Giới tính</span>
+        <span class="number1">{{
+          broker ? (broker.gender === true ? "Nam" : "Nữ") : ""
+        }}</span>
+      </div>
+
+      <div class="d-flex flex-column">
+        <span class="followers">Địa chỉ email</span>
+        <span class="number2">{{ broker ? broker.email : "" }}</span>
+      </div>
+    </div>
+
+    <div class="button mt-2 d-flex flex-row align-items-center">
+      <button class="btn btn-sm btn-outline-primary w-100">
+        {{ (broker ? broker.phoneNumber : "" ) | slice: 0:4 }}
+        {{ (broker ? broker.phoneNumber : "" ) | slice: 4:7  }}
+        {{ (broker ? broker.phoneNumber : "" ) | slice: 7:10 }}
+      </button>
+    </div>
+  </div>
+</div>

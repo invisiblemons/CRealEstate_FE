@@ -1,0 +1,95 @@
+.card {
+  padding: 0rem;
+  border: unset;
+  box-shadow: 0 4px 10px rgb(0 0 0 / 20%);
+}
+.title {
+  align-items: center;
+  max-height: 10vh;
+  h5 {
+    margin-left: 3rem;
+    margin-bottom: 0rem !important;
+  }
+}
+.right-section {
+  max-height: 72.5vh;
+}
+
+.left-section {
+  height: 72.5vh;
+}
+
+:host ::ng-deep {
+  //table calendars
+  .appms-list > .p-datatable-auto-layout > .p-datatable-wrapper {
+    max-height: 64vh;
+    min-height: 64vh;
+    overflow: auto;
+    &::-webkit-scrollbar-track {
+      -webkit-box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.3);
+      border-radius: 10px;
+      background-color: #fff;
+    }
+    &::-webkit-scrollbar {
+      width: 12px;
+      background-color: #fff;
+    }
+    &::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      -webkit-box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.3);
+      background-color: #e9ecef;
+    }
+  }
+  .p-paginator {
+    color: #2576bb;
+    .p-paginator-current {
+      color: #2576bb;
+    }
+  }
+  .p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
+    background: #2576bb !important;
+    color: #fff !important;
+  }
+  .p-paginator .p-paginator-pages .p-paginator-page {
+    color: #2576bb;
+  }
+  .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
+    background: #2576bb !important;
+  }
+  //table properties
+  .properties-list > .p-datatable-auto-layout > .p-datatable-wrapper {
+    max-height: unset !important;
+  }
+  // Calendar
+  .fc {
+    height: 100%;
+    width: 100%;
+    .fc-toolbar {
+      padding: 0.5rem;
+      margin-bottom: 0 !important;
+    }
+    .fc-button {
+      background-color: #2576bb !important;
+      &:hover {
+        background-color: #0857a0 !important;
+      }
+    }
+  }
+}
+
+.properties-list {
+  padding: 1rem;
+}
+
+::ng-deep .btn-default {
+  padding: 0.625rem 1.25rem !important;
+}
+
+::ng-deep {
+  .p-dialog .p-dialog-content {
+    padding: 0.5rem 1.5rem;
+  }
+  .p-dialog .p-dialog-footer {
+    padding: .5rem;
+  }
+}

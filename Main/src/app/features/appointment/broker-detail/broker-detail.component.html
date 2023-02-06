@@ -1,0 +1,133 @@
+<p-dialog
+  header="Chi tiết người nhân viên môi giới"
+  [(visible)]="isShowModal"
+  [style]="{ width: '80vw' }"
+  [modal]="true"
+  styleClass="p-fluid"
+  (onHide)="hideDialog()"
+  [dismissableMask]="true"
+  [closable]="true"
+  [draggable]="false"
+  [baseZIndex]="1100"
+>
+<div class="wrapper">
+  <div class="container-fluid px-4 pt-3">
+    <div class="row">
+      <div class="col-lg-12 col-md-12 mb-4">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="card title p-3">
+              <h5 class="mb-0">
+                <strong>THÔNG TIN NGƯỜI MÔI GIỚI</strong>
+              </h5>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-5 col-md-12 mb-2">
+        <div class="container pl-0">
+          <div class="row justify-content-center">
+            <div class="col-lg-12">
+              <div class="card my-0" *ngIf="isShowSkeleton">
+                <div class="flex justify-content-center">
+                  <p-skeleton shape="circle" size="5rem"></p-skeleton>
+                </div>
+              </div>
+              <div class="card" *ngIf="!isShowSkeleton">
+                <div class="w-100 text-center">
+                  <img
+                    [src]="
+                      broker ? broker.avatarLink : 'assets/img/defaultAvatar.png'
+                    "
+                    alt="avatar"
+                    class="rounded-circle img-fluid"
+                    style="width: 150px"
+                  />
+                  <h6 class="my-2">Người môi giới</h6>
+                  <p class="text-muted mb-4">{{ broker.name }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-7 col-md-12 mb-2">
+        <div class="row justify-content-center">
+          <div class="col-sm-12">
+            <div class="card p-3" *ngIf="isShowSkeleton">
+              <div class="sm:col-12 md:col-6">
+                <p-skeleton height="2rem" styleClass="mb-2"></p-skeleton>
+              </div>
+              <div class="sm:col-12 md:col-6">
+                <p-skeleton height="2rem" styleClass="mb-2"></p-skeleton>
+              </div>
+              <div class="sm:col-12 md:col-6">
+                <p-skeleton height="2rem" styleClass="mb-2"></p-skeleton>
+              </div>
+              <div class="sm:col-12 md:col-6">
+                <p-skeleton height="2rem" styleClass="mb-2"></p-skeleton>
+              </div>
+            </div>
+            <div class="card p-3" *ngIf="!isShowSkeleton">
+              <div class="container">
+                <div class="row">
+                  <div class="col-sm-3">
+                    <p class="mb-0">Họ và tên</p>
+                  </div>
+                  <div class="col-sm-9">
+                    <p class="text-muted mb-0">{{ broker.name }}</p>
+                  </div>
+                </div>
+                <hr />
+                <div class="row">
+                  <div class="col-sm-3">
+                    <p class="mb-0">Giới tính</p>
+                  </div>
+                  <div class="col-sm-9">
+                    <p class="text-muted mb-0">
+                      {{ broker.gender ? "Nam" : "Nữ" }}
+                    </p>
+                  </div>
+                </div>
+                <hr />
+                <div class="row">
+                  <div class="col-sm-3">
+                    <p class="mb-0">Địa chỉ email</p>
+                  </div>
+                  <div class="col-sm-9">
+                    <p class="text-muted mb-0">{{ broker.email }}</p>
+                  </div>
+                </div>
+                <hr />
+                <div class="row">
+                  <div class="col-sm-3">
+                    <p class="mb-0">Số điện thoại</p>
+                  </div>
+                  <div class="col-sm-9">
+                    <p class="text-muted mb-0">
+                      {{ broker.phoneNumber | slice: 0:4 }}
+                      {{ broker.phoneNumber | slice: 4:7 }}
+                      {{ broker.phoneNumber | slice: 7:10 }}
+                    </p>
+                  </div>
+                </div>
+                <hr />
+                <div class="row">
+                  <div class="col-sm-3">
+                    <p class="mb-0">Ngày sinh</p>
+                  </div>
+                  <div class="col-sm-9">
+                    <p class="text-muted mb-0">
+                      {{ broker.birthday | date: DATE_FORMAT }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</p-dialog>

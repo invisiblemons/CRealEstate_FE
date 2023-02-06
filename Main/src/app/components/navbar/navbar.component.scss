@@ -1,0 +1,26 @@
+.btn-default {
+    padding: .625rem 1.25rem;
+}
+.active a .nav-link-inner--text{
+    border-bottom: solid 3px #2576bb;
+    color: #2576bb;
+}
+.btn-default {
+    background-color: #2576BB;
+    &:hover{
+        background-color: #0857A0;
+        transform: none;
+        border-width: 1px !important;
+    }
+}
+
+.btn-outline-default {
+    color: #2576BB;
+    &:hover{
+        color: white;
+        transform: none;
+    }
+}
+a {
+    cursor: pointer;
+}

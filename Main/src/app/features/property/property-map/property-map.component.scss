@@ -1,0 +1,66 @@
+#map {
+  width: 100%;
+  height: 100%;
+}
+:host(.customClass) {
+  height: 100%;
+   padding-bottom: 3.6rem;
+}
+.card-preview {
+  background-color: #fff;
+  box-shadow: 2px 2px 15px 0 rgb(150 152 155 / 20%);
+  cursor: pointer;
+  position: relative;
+}
+::ng-deep .img-preview {
+  height: 125px;
+    object-fit: cover;
+    vertical-align: bottom;
+    width: 100%;
+    cursor: pointer;
+    image-orientation: from-image;
+    max-width: none;
+}
+
+.card-preview-content {
+  padding: 15px;
+  cursor: pointer;
+}
+
+::ng-deep .gm-ui-hover-effect {
+  border: 0;
+    background: none;
+    padding: 0;
+    align-items: center;
+    display: flex;
+    display: flex;
+    justify-content: center;
+    background-color: #fff;
+    border-radius: 50%;
+    cursor: pointer;
+    height: 20px;
+    margin-top: 50px;
+    position: absolute;
+    right: 6px;
+    top: 6px;
+    width: 20px;
+    z-index: 1;
+    &:focus {
+      outline: none;
+    }
+    &:focus-visible {
+      outline: none;
+    }
+}
+
+::ng-deep .text-muted {
+  font-size: 1rem;
+}
+
+::ng-deep {
+  .vl {
+    border-left: 3px solid grey;
+    height: 7px;
+    margin: 0 6px;
+  }
+}

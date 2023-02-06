@@ -1,0 +1,237 @@
+<div class="grid-nogutter mt-4">
+  <div class="col-offset-2 sm:col-8 mx-auto">
+    <div class="card">
+      <p-table
+        #datatable
+        [value]="contracts"
+        responsiveLayout="scroll"
+        [resizableColumns]="true"
+        [responsive]="true"
+        [paginator]="true"
+        [rows]="TABLE_CONFIG.ROWS"
+        [showCurrentPageReport]="true"
+        currentPageReportTemplate="Hiển thị từ {first} đến {last} của {totalRecords} mục"
+        [rowsPerPageOptions]="TABLE_CONFIG.ROWS_PER_PAGE"
+        [globalFilterFields]="['name']"
+        [rowHover]="true"
+        styleClass="p-sticky p-datatable-striped"
+        [(selection)]="selectedContracts"
+        [columns]="selectedColumns"
+        [autoLayout]="true"
+      >
+        <ng-template pTemplate="caption">
+          <div class="grid highlight">
+            <div class="col-9">
+              <h2 class="p-m-0" style="font-weight: 500">
+                Quản lý hợp đồng thuê
+              </h2>
+            </div>
+            <div class="col-3">
+              <div class="flex justify-content-end">
+                <p-multiSelect
+                  name="columns"
+                  [options]="displayCols"
+                  [(ngModel)]="selectedColumns"
+                  [maxSelectedLabels]="0"
+                  optionLabel="header"
+                  selectedItemsLabel="{{
+                    cols.length === selectedColumns.length
+                      ? 'Tất cả'
+                      : 'Chọn cột hiển thị'
+                  }}"
+                  [style]="{ minWidth: '224px' }"
+                  [scrollHeight]="220"
+                  placeholder="Chọn cột hiển thị"
+                >
+                </p-multiSelect>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <ng-container *ngFor="let col of columns" [ngSwitch]="col.field">
+              <th
+                *ngSwitchCase="'cbb'"
+                [ngStyle]="{ textAlign: col.headerAlign }"
+              >
+                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+              </th>
+              <th
+                *ngSwitchCase="
+                  col.field === 'no' || col.field === 'action' ? col.field : ''
+                "
+                [ngStyle]="{ textAlign: col.headerAlign }"
+              >
+                {{ col.header }}
+              </th>
+              <th
+                *ngSwitchDefault
+                [ngStyle]="{ textAlign: col.headerAlign }"
+                pSortableColumn="{{ col.field }}"
+              >
+                {{ col.header }}
+                <p-sortIcon field="{{ col.field }}"></p-sortIcon>
+              </th>
+              <th
+                *ngSwitchCase="'status'"
+                [ngStyle]="{ textAlign: col.headerAlign }"
+              >
+                <div class="p-d-flex p-jc-between p-ai-center">
+                  Trạng thái
+                  <p-columnFilter
+                    field="status"
+                    matchMode="equals"
+                    [display]="'menu'"
+                    [showAddButton]="false"
+                    [showMatchModes]="false"
+                    [showOperator]="false"
+                    [showClearButton]="false"
+                    [showApplyButton]="false"
+                  >
+                    <ng-template
+                      pTemplate="filter"
+                      let-value
+                      let-filter="filterCallback"
+                    >
+                      <p-dropdown
+                        emptyMessage="Danh sách trống"
+                        [ngModel]="value"
+                        [options]="statuses"
+                        (onChange)="filter($event.value)"
+                        placeholder="Chọn trạng thái"
+                        [showClear]="true"
+                      >
+                        <ng-template let-option pTemplate="item">
+                          <p-tag
+                            *ngIf="option.value === 0"
+                            icon="pi pi-trash"
+                            severity="danger"
+                            value="{{ option.label }}"
+                            [rounded]="true"
+                          ></p-tag>
+                          <p-tag
+                            *ngIf="option.value === 1"
+                            icon="pi pi-exclamation-triangle"
+                            severity="warning"
+                            value="{{ option.label }}"
+                            [rounded]="true"
+                          ></p-tag>
+                          <p-tag
+                            *ngIf="option.value === 2"
+                            icon="pi pi-check"
+                            severity="success"
+                            value="{{ option.label }}"
+                            [rounded]="true"
+                          ></p-tag>
+                        </ng-template>
+                      </p-dropdown>
+                    </ng-template>
+                  </p-columnFilter>
+                </div>
+              </th>
+            </ng-container>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="colgroup" let-columns>
+          <colgroup>
+            <col
+              *ngFor="let col of columns"
+              [ngStyle]="{ width: col.width || 'auto' }"
+            />
+          </colgroup>
+        </ng-template>
+
+        <ng-template
+          pTemplate="body"
+          let-contract
+          let-columns="columns"
+          let-i="rowIndex"
+        >
+          <tr>
+            <ng-container *ngFor="let col of columns" [ngSwitch]="col.field">
+              <td *ngSwitchCase="'no'" [ngStyle]="{ textAlign: col.textAlign }">
+                {{ i + 1 }}
+              </td>
+              <td
+                *ngSwitchCase="'startDate'"
+                [ngStyle]="{ textAlign: col.textAlign }"
+              >
+                {{ contract[col.field] | date : "dd-MM-yyyy" }}
+              </td>
+              <td
+                *ngSwitchCase="'endDate'"
+                [ngStyle]="{ textAlign: col.textAlign }"
+              >
+                {{ contract[col.field] | date : "dd-MM-yyyy" }}
+              </td>
+              <td
+                *ngSwitchDefault
+                [attr.title]="contract[col.field]"
+                [ngStyle]="{ textAlign: col.textAlign }"
+              >
+                {{ contract[col.field] }}
+              </td>
+              <td
+                *ngSwitchCase="'status'"
+                [ngStyle]="{ textAlign: col.textAlign }"
+              >
+                <p-tag
+                  *ngIf="contract.status === 0"
+                  icon="pi pi-trash"
+                  severity="danger"
+                  value="{{ statuses[0].label }}"
+                  [rounded]="true"
+                ></p-tag>
+                <p-tag
+                  *ngIf="contract.status === 1"
+                  icon="pi pi-exclamation-triangle"
+                  severity="warning"
+                  value="{{ statuses[1].label }}"
+                  [rounded]="true"
+                ></p-tag>
+                <p-tag
+                  *ngIf="contract.status === 2"
+                  icon="pi pi-check"
+                  severity="success"
+                  value="{{ statuses[2].label }}"
+                  [rounded]="true"
+                ></p-tag>
+              </td>
+              <td
+                *ngSwitchCase="'action'"
+                [ngStyle]="{ textAlign: col.textAlign }"
+              >
+                <button
+                  class="btn btn-primary btn-round btn-icon animation-on-hover mr-2"
+                  (click)="openDetailContract(contract)"
+                  pTooltip="Xem chi tiết"
+                >
+                  <i class="pi pi-eye"> </i>
+                </button>
+              </td>
+            </ng-container>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="5" *ngIf="isShowSpin" class="text-center">
+              <p-progressSpinner
+                [style]="{ width: '50px', height: '50px' }"
+                styleClass="custom-spinner"
+                strokeWidth="8"
+                fill="#EEEEEE"
+                animationDuration=".5s"
+              ></p-progressSpinner>
+            </td>
+            <td colspan="5" *ngIf="!isShowSpin" class="text-center">
+              Không có hợp đồng.
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+    <router-outlet></router-outlet>
+  </div>
+</div>
